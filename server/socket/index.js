@@ -10,20 +10,6 @@ function initSocketServer(httpServer) {
         },
     });
 
-    //test
-
-    io.on('connection', (socket) => {
-        console.log('A user connected');
-
-        socket.on('test_message', (data) => {
-            console.log('Received message:', data);
-            socket.emit('response_message', 'This is a message from the server!');
-        });
-
-        socket.on('disconnect', () => {
-            console.log('A user disconnected');
-        });
-    });
 }
 
 function getSocketIO(){
