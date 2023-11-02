@@ -2,8 +2,8 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/HomePage/HomePage";
 import Room from "./components/RoomPage/RoomPage";
-// import Signup from "./components/SignupPage/index";
-// import Login from "./components/LoginPage/index";
+// import Signup from "./components/Signup/index";
+// import Login from "./components/Login/index";
 
 function App() {
 	// const user = localStorage.getItem("token");
