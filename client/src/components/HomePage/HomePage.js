@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import CreateRoom from "./CreateRoom";
 import JoinRoom from "./JoinRoom";
 
-const Home = () => {
+
+const HomePage = () => {
   // Define state variables to control modal visibility
   const [openModal1, setOpenModal1] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
@@ -73,4 +74,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;
