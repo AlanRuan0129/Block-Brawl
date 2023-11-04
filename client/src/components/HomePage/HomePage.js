@@ -17,7 +17,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full min-w-80rem min-h-screen flex flex-col">
       {/* Navigation bar */}
       <nav className="w-full h-[40px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 flex items-center justify-between">
         <img

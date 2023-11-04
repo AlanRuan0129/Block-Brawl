@@ -22,7 +22,10 @@ module.exports = {
         'league-spartan': ['League Spartan', 'sans-serif'],
         'nanum-pen': ['Nanum Pen Script', 'sans'],
         'luckiest-guy': ['Luckiest Guy', 'sans'],
-      }
+      },
+      minWidth: {
+        '80rem': '80rem',
+      },
     },
   },
   plugins: [],

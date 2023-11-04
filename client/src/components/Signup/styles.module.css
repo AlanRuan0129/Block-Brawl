@@ -7,7 +7,7 @@
   }
 
 .signup_container {
-	width: 100%;
+	min-width: 80rem;
 	min-height: 100vh;
 	background-image: url("/public/assets/loader.gif"), url("/public/assets/loginpage.jpg");
 	background-repeat: no-repeat no-repeat;
