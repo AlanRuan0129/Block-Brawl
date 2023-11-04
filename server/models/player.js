@@ -1,5 +1,4 @@
-
-export class player {
+export class Player {
     constructor(id, name) {
         this.id = id;
         this.name = name;

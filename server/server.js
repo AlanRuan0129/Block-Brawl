@@ -1,11 +1,12 @@
 import express from "express";
 import { createServer } from "http";
-import { initSocketServer } from "./socket/index.js";
+import { initSocketServer, getSocketIO } from "./socket/index.js";
 import cors from "cors";
 import connectDB from "./db.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import dotenv from "dotenv";
+import { CreateRoomOn, JoinRoomOn } from "./socket/on.js";
 
 // Load environment variables
 dotenv.config();
@@ -19,9 +20,18 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+import { Server } from "socket.io";
 
 // Initialize Socket server
 initSocketServer(httpServer);
+
+const io = getSocketIO();
+
+io.on("connection", (socket) => {
+    console.log('A user connected', socket.id);
+    CreateRoomOn(socket);
+    JoinRoomOn(socket);
+  });
 
 // Connect to MongoDB and start the server
 connectDB().then(() => {
