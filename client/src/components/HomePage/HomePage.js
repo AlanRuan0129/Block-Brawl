@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import CreateRoom from "./CreateRoom";
 import JoinRoom from "./JoinRoom";
 
-
 const HomePage = () => {
   // Define state variables to control modal visibility
   const [openModal1, setOpenModal1] = useState(false);
@@ -25,35 +24,29 @@ const HomePage = () => {
           alt="Logo"
           className="mt-[2px] h-[70px] ml-2"
         />
-        {/* Logout button */}
-       
         <button
-  
-  type="button"
-  className="mr-7 bg-power-off-purple toggle-btn relative inline-flex items-center justify-between p-0 w-[65px] h-7 rounded-full focus:outline-none focus:ring-4 focus:ring-red-300 transition-colors duration-300"
-  onClick={handleLogout}
->
-  <span className="ml-2 text-base font-bold text-white">Off</span>
-  <span className="toggle-slider absolute border-[1px] border-white right-1 top-1/2 -translate-y-1/2 bg-power-font w-[25px] h-[25px] rounded-full shadow-md transition-transform duration-300 flex items-center justify-center">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="4"
-      stroke="currentColor"
-      className="w-4 h-4 text-gray-600"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"
-      />
-    </svg>
-  </span>
-</button>
-
-
-        
+          type="button"
+          className="mr-7 bg-power-off-purple toggle-btn relative inline-flex items-center justify-between p-0 w-[65px] h-7 rounded-full focus:outline-none focus:ring-4 focus:ring-red-300 transition-colors duration-300"
+          onClick={handleLogout}
+        >
+          <span className="ml-2 text-base font-bold text-white">Off</span>
+          <span className="toggle-slider absolute border-[1px] border-white right-1 top-1/2 -translate-y-1/2 bg-power-font w-[25px] h-[25px] rounded-full shadow-md transition-transform duration-300 flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="4"
+              stroke="currentColor"
+              className="w-4 h-4 text-gray-600"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"
+              />
+            </svg>
+          </span>
+        </button>
       </nav>
 
       {/* Main content */}

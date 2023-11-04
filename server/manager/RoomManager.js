@@ -15,10 +15,6 @@ export class RoomManager {
     rooms.set(room.roomId, room);
     room.toDto();
     // GameUpdate(roomId, room.toDto());
-    rooms.forEach((roomId, host) => {
-      console.log(roomId, host);
-    });
-
     return room;
   }
 
@@ -28,7 +24,6 @@ export class RoomManager {
 
   static joinRoom(socket, roomId, name) {
     const room = rooms.get(roomId);
-
     if (room && room.isOpen && room.players.size < room.config.roomSize) {
       socket.join(roomId);
       room.addPlayer(new Player(socket.id, name));
