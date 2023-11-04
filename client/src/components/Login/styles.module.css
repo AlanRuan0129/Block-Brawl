@@ -1,7 +1,18 @@
+@font-face {
+	font-family: 'JotiOne-Regular';
+	src: local('JotiOne-Regular'), 
+		 url('/public/fonts/JotiOne-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+  }
+  
 .login_container {
 	width: 100%;
 	min-height: 100vh;
-	background-color: #f5f5f5;
+	background-image: url("/public/assets/loader.gif"), url("/public/assets/loginpage.jpg");
+	background-repeat: no-repeat no-repeat;
+	background-position: center center, center center;
+	background-size: 100% auto, cover;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -22,9 +33,9 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: white;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
+	background-color: #f8d3fa;
+	border-top-left-radius: 50px;
+	border-bottom-left-radius: 50px;
 }
 
 .form_container {
@@ -34,8 +45,11 @@
 }
 
 .form_container h1 {
-	font-size: 40px;
-	margin-top: 0;
+	font-size: 65px;
+	margin-bottom: 20px;
+	font-family: 'JotiOne-Regular', sans-serif;
+	font-weight: bold;
+	color: #050b32;
 }
 
 .input {
@@ -44,8 +58,8 @@
 	width: 370px;
 	padding: 15px;
 	border-radius: 10px;
-	background-color: #edf5f3;
-	margin: 5px 0;
+	background-color: #ffff;
+	margin: 15px 0;
 	font-size: 14px;
 }
 
@@ -66,9 +80,9 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: #3bb19b;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
+	background-color: #966ff6;
+	border-top-right-radius: 50px;
+	border-bottom-right-radius: 50px;
 }
 
 .right h1 {
@@ -92,7 +106,7 @@
 }
 
 .green_btn {
-	background-color: #3bb19b;
+	background-color: #ec75ce;
 	color: white;
-	margin: 10px;
+	margin-top: 30px;
 }

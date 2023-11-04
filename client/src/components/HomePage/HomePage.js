@@ -17,58 +17,76 @@ const HomePage = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full min-h-screen flex flex-col">
       {/* Navigation bar */}
-      <nav className="w-full h-[70px] bg-yellow-400 flex items-center justify-between">
-        <h1 className="text-white text-2xl font-bold ml-5">BlockBrawl</h1>
-
+      <nav className="w-full h-[40px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 flex items-center justify-between">
+        <img
+          src="/assets/logo.png"
+          alt="Logo"
+          className="mt-[2px] h-[70px] ml-2"
+        />
         {/* Logout button */}
+       
         <button
-          type="button"
-          className="text-white bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-2 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-          onClick={handleLogout}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"
-            />
-          </svg>
-        </button>
+  
+  type="button"
+  className="mr-7 bg-power-off-purple toggle-btn relative inline-flex items-center justify-between p-0 w-[65px] h-7 rounded-full focus:outline-none focus:ring-4 focus:ring-red-300 transition-colors duration-300"
+  onClick={handleLogout}
+>
+  <span className="ml-2 text-base font-bold text-white">Off</span>
+  <span className="toggle-slider absolute border-[1px] border-white right-1 top-1/2 -translate-y-1/2 bg-power-font w-[25px] h-[25px] rounded-full shadow-md transition-transform duration-300 flex items-center justify-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="4"
+      stroke="currentColor"
+      className="w-4 h-4 text-gray-600"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"
+      />
+    </svg>
+  </span>
+</button>
+
+
+        
       </nav>
 
       {/* Main content */}
-      <div className="fixed bottom-80 left-0 right-0 flex flex-col items-center justify-end mt-auto space-y-10 pb-4">
-        {/* Button to create a room */}
-        <button
-          type="button"
-          className="text-white w-40 h-12 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm text-center"
-          onClick={() => setOpenModal1(true)}
-        >
-          Create Room
-        </button>
-        {/* Display the CreateRoom modal if openModal1 is true */}
-        {openModal1 && <CreateRoom closeModal={setOpenModal1} />}
+      <div className="bg-homepage bg-center flex-grow flex flex-col items-center justify-center space-y-10">
+        <div className="mt-[200px] font-nanum-pen text-custom-pink font-bold text-[200px] leading-[54px]">
+          {" "}
+          BLOCK BRAWL
+        </div>
+        <div className="mt-35 flex-grow flex flex-col items-center justify-center space-y-[50px]">
+          {/* Button to create a room */}
+          <button
+            type="button"
+            className="text-white w-[350px] h-[90px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-luckiest-guy  font-bold rounded-[25px] text-[30px] text-center"
+            onClick={() => setOpenModal1(true)}
+          >
+            Create Room
+          </button>
 
-        {/* Button to join a room */}
-        <button
-          type="button"
-          className="text-white w-40 h-12 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm text-center"
-          onClick={() => setOpenModal2(true)}
-        >
-          Join Room
-        </button>
+          {/* Display the CreateRoom modal if openModal1 is true */}
+          {openModal1 && <CreateRoom closeModal={setOpenModal1} />}
 
-        {/* Display the JoinRoom modal if openModal2 is true */}
-        {openModal2 && <JoinRoom closeModal={setOpenModal2} />}
+          {/* Button to join a room */}
+          <button
+            type="button"
+            className="text-white w-[350px] h-[90px]  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-luckiest-guy  font-bold rounded-[25px] text-[30px] text-center"
+            onClick={() => setOpenModal2(true)}
+          >
+            Join Room
+          </button>
+
+          {/* Display the JoinRoom modal if openModal2 is true */}
+          {openModal2 && <JoinRoom closeModal={setOpenModal2} />}
+        </div>
       </div>
     </div>
   );
