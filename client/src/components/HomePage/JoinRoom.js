@@ -9,16 +9,17 @@ import { useNavigate } from "react-router-dom";
 // JoinRoom Component: Modal for users to join an existing room
 
 function JoinRoom({ closeModal }) {
+  
   const navigate = useNavigate();
 
   const [userName, setUserName] = useState("");
 
   const [roomNumber, setRoomNumber] = useState("");
 
-  const { setIsHost, setRoomId, roomId, handlers, name, setName } =
-    useContext(AppContext);
+  const { setIsHost, setRoomId, handlers, setName } = useContext(AppContext);
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
 
     if (name === "value") {
@@ -35,19 +36,18 @@ function JoinRoom({ closeModal }) {
   };
 
   const joinRoom = (e) => {
+
     e.preventDefault();
 
     Socket.connect();
 
-    Socket.emit("join-room", { roomId, name }, (room) => {
+    Socket.emit("join-room", { roomId: roomNumber, name: userName }, (room) => {
       if (room) {
         setRoomId(room.roomId);
-
         handlers.setState(room.players);
-
-        setName(name);
-
-        navigate("/" + roomId.toString() + "/roompage");
+        setName(userName);
+        // navigate("/" + roomId.toString() + "/roompage");
+        navigate("/roompage");
       } else {
         alert("Room Not Found!");
       }

@@ -1,4 +1,4 @@
-export class board{
+export class Board{
     constructor(size) {
         this.board = Array(size)
           .fill()

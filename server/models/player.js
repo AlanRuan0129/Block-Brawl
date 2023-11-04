@@ -1,5 +1,5 @@
 import { Direction } from "../direction.js";
-export class player {
+export class Player {
   constructor(id, name) {
     this.id = id;
     this.name = name;

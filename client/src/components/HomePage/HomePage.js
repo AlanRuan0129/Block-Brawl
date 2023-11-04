@@ -57,7 +57,7 @@ const HomePage = () => {
       </nav>
 
       {/* Main content */}
-      <div className="bg-homepage bg-center flex-grow flex flex-col items-center justify-center space-y-10">
+      <div className="bg-homepage bg-center min-bg flex-grow flex flex-col items-center justify-center space-y-10">
         <div className="mt-[200px] font-nanum-pen text-custom-pink font-bold text-[200px] leading-[54px]">
           {" "}
           BLOCK BRAWL

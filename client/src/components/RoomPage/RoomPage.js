@@ -1,9 +1,9 @@
 import React from 'react'
 
-const RoomPage = () => {
+function RoomPage() {
   return (
     <div>
-      <h1>Hello</h1>
+      <h1>Room Page</h1>
     </div>
   )
 }

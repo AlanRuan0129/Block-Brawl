@@ -1,18 +1,24 @@
 import { Socket } from "socket.io";
-import { Player } from "../model/Player.js";
-import { Room } from "../model/Room.js";
+import { Player } from "../models/Player.js";
+import { Room } from "../models/Room.js";
+import { generateString } from "./util.js";
 
 let rooms = new Map();
 
 export class RoomManager {
-
   static createRoom(socket, name) {
     const roomId = generateString(6);
     socket.join(roomId);
+
     const host = new Player(socket.id, name);
     const room = new Room(roomId, host);
     rooms.set(room.roomId, room);
-    GameUpdate(roomId, room.toDto());
+    room.toDto();
+    // GameUpdate(roomId, room.toDto());
+    rooms.forEach((roomId, host) => {
+      console.log(roomId, host);
+    });
+
     return room;
   }
 
@@ -22,12 +28,15 @@ export class RoomManager {
 
   static joinRoom(socket, roomId, name) {
     const room = rooms.get(roomId);
-    if (room && room.isOpen) {
-      if (room && room.isOpen && room.players.size < room.config.roomSize) {
-        socket.join(roomId);
-        room.addPlayer(new Player(socket.id, name));
-        const messageValue = name + " has joined the room!";
-      }
+
+    if (room && room.isOpen && room.players.size < room.config.roomSize) {
+      socket.join(roomId);
+      room.addPlayer(new Player(socket.id, name));
+      const messageValue = name + " has joined the room!";
+      room.toDto();
+      return room;
+    } else {
+      return null;
     }
   }
 }
