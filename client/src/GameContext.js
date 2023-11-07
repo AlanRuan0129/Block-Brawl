@@ -13,9 +13,23 @@ export const AppContext = React.createContext({
   setHostId: (hostId) => {},
   name: "",
   setName: (name) => {},
+  colors: [],
+  setColors: (colors) => {},
+  colorStatus: [],
+  setColorStatus: (colorStatus) => {},
+  config: {
+    roomSize: 3,
+    boardSize: 9,
+    roundTime: 60,
+    breakTime: 0.0,
+  },
+  setConfig: (config) => {},
+  playing: true,
+  toggle: () => {},
+  stop: () => {},
 });
 
-export function GameContext({ children }){
+export function GameContext({ children }) {
   // Manage players in the room
   const [players, handlers] = useListState();
 
@@ -27,6 +41,20 @@ export function GameContext({ children }){
 
   //player name
   const [name, setName] = useState("");
+  //player colors
+  const [colors, setColors] = useState([]);
+
+  //player color status
+  const [colorStatus, setColorStatus] = useState([]);
+
+  const [hostId, setHostId] = useState("");
+
+  const [config, setConfig] = useState({
+    roomSize: 8,
+    boardSize: 9,
+    roundTime: 30,
+    breakTime: 0.5,
+  });
 
   const context = {
     players,
@@ -37,8 +65,15 @@ export function GameContext({ children }){
     setRoomId,
     name,
     setName,
+    colors,
+    setColors,
+    colorStatus,
+    setColorStatus,
+    hostId,
+    setHostId,
+    config,
+    setConfig,
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 }
-

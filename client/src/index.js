@@ -5,16 +5,20 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import App from "./App";
 import { GameContext } from "./GameContext";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<GameContext>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
-		</GameContext>
-	</React.StrictMode>,
-	document.getElementById("root")
+  <React.StrictMode>
+    <GameContext>
+      <BrowserRouter>
+        <MantineProvider>
+          <App />
+        </MantineProvider>
+      </BrowserRouter>
+    </GameContext>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

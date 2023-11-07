@@ -1,3 +1,7 @@
-export default function GamePage() {
-  return <h1> Hello, GamePage</h1>;
+import React from "react";
+
+function GamePage() {
+  return <div>GamePage</div>;
 }
+
+export default GamePage;

@@ -5,12 +5,19 @@ import { useNavigate } from "react-router-dom";
 
 function CreateRoom({ closeModal }) {
   const navigate = useNavigate();
-  const { setIsHost, setRoomId, handlers, name, setName } = useContext(AppContext);
-  
+  const {
+    setIsHost,
+    setRoomId,
+    handlers,
+    name,
+    setName,
+    setColors,
+    setColorStatus,
+  } = useContext(AppContext);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
-    setName(newValue);        
+    setName(newValue);
   };
 
   const createRoom = (e) => {
@@ -22,9 +29,11 @@ function CreateRoom({ closeModal }) {
       setRoomId(room.roomId);
       handlers.setState(room.players);
       setName(name);
+      setColors(room.colors);
+      setColorStatus(room.colorStatus);
       // navigate("/" + room.roomId.toString() + "/roompage");
       alert(`Room ${room.roomId} Created!`);
-      navigate("/roompage");
+      navigate("/Layout/setting");
     });
   };
 

@@ -6,7 +6,15 @@ import connectDB from "./db.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import dotenv from "dotenv";
-import { CreateRoomOn, JoinRoomOn } from "./socket/on.js";
+import {
+  CreateRoomOn,
+  JoinRoomOn,
+  PlayerReadyOn,
+  PlayerUnReadyOn,
+  StartGameOn,
+  UpdateConfigOn,
+  OnRoomInformationRequest,
+} from "./socket/on.js";
 
 // Load environment variables
 dotenv.config();
@@ -28,17 +36,24 @@ initSocketServer(httpServer);
 const io = getSocketIO();
 
 io.on("connection", (socket) => {
-    console.log('A user connected', socket.id);
-    CreateRoomOn(socket);
-    JoinRoomOn(socket);
-  });
+  console.log("A user connected", socket.id);
+  CreateRoomOn(socket);
+  JoinRoomOn(socket);
+  PlayerReadyOn(socket);
+  PlayerUnReadyOn(socket);
+  UpdateConfigOn(socket);
+  StartGameOn(socket);
+  OnRoomInformationRequest(socket);
+});
 
 // Connect to MongoDB and start the server
-connectDB().then(() => {
+connectDB()
+  .then(() => {
     const port = process.env.PORT || 5000;
     httpServer.listen(port, () => {
-        console.log(`httpServer is running on port ${port}`);
+      console.log(`httpServer is running on port ${port}`);
     });
-}).catch(err => {
-    console.error('Failed to connect to MongoDB:', err);
-});
+  })
+  .catch((err) => {
+    console.error("Failed to connect to MongoDB:", err);
+  });
