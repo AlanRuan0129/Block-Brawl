@@ -23,21 +23,3 @@ export function PlayerSelect(props) {
 
   return <div>{swatches}</div>;
 }
-
-// import { useState } from "react";
-// import { ColorSwatch, CheckIcon, rem } from "@mantine/core";
-
-// export function PlayerSelect() {
-//   const [checked, setChecked] = useState(true);
-
-//   return (
-//     <ColorSwatch
-//       component="button"
-//       color="var(--mantine-color-grape-6)"
-//       onClick={() => setChecked((c) => !c)}
-//       style={{ color: "#fff", cursor: "pointer" }}
-//     >
-//       {checked && <CheckIcon style={{ width: rem(12), height: rem(12) }} />}
-//     </ColorSwatch>
-//   );
-// }
