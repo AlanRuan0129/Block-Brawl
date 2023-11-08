@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { PlayerSelect } from "./PlayerSelect.js";
 import { AppContext } from "../GameContext.js";
 import socket from "../Socket";
-import { MainButton } from "./MainButton.js";
+import { MainButton } from "./MainButton/MainButton.js";
 import { CheckIcon, rem } from "@mantine/core";
 
 export default function SettingPage() {
@@ -17,15 +17,18 @@ export default function SettingPage() {
     setColorStatus,
     roomId,
     handlers,
+    // eslint-disable-next-line no-unused-vars
     config,
     setConfig,
   } = useContext(AppContext);
 
   const [checkedColor, setCheckedColor] = useState(null);
   const [isReady, setIsReady] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [isReadyFail, setIsReadyFail] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [isSuccess2, setSuccess2] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [isUpdateResponse, setUpdateResponse] = useState(false);
 
   const playerReady = () => {
@@ -112,7 +115,7 @@ export default function SettingPage() {
         setColorStatus(game.colorStatus);
       }
       if (game.board) {
-        navigate("/Layout/game", { state: { game: game } }); ///${roomId}/game
+        navigate("/Layout/game", { state: { game: game } });
       }
     };
     socket.on("game-update", startGame);
@@ -123,92 +126,127 @@ export default function SettingPage() {
   }, []);
 
   return (
-    <div>
-      <h1>
-        Hello setting {colors} {isSuccess ? <h1>isSuccess</h1> : <h1>no1</h1>}
-        {isSuccess2 ? <h1>isSuccess2</h1> : <h1>no2</h1>}
-        {isHost ? <h1>isHost</h1> : <h1>no</h1>}
-      </h1>
-      <div className="flex flex-row justify-center gap-2 text-2xl font-bold text-black">
-        Room Code: {roomId}
-        <button onClick={() => navigator.clipboard.writeText(roomId)}>
-          copytotextbord
-        </button>
-      </div>
-      <div>{isHost ? "Invite your friends!" : "Wait for host to Start!"}</div>
-
-      {isSuccess ? (
-        <p className="text-center text-green-500">
-          Successfully updated game Level1
-        </p>
-      ) : (
-        <p className="text-center text-red-500">Failed to update game Level</p>
-      )}
-
-      {isSuccess2 ? (
-        <p className="text-center text-green-500">
-          Successfully updated game Level2
-        </p>
-      ) : (
-        <p className="text-center text-red-500">Failed to update game Level</p>
-      )}
-
-      <MainButton
-        handleClick={isReady ? playerUnReady : playerReady}
-        text={isReady ? "Cancel" : "Ready"}
-      />
-      {/* {isHost ? (
-        <div className="flex flex-col items-center justify-around w-3/5 xl:flex-row gap-y-2">
-          <MainButton handleClick={startGame} text="Start Game" />
-          <button
-            onClick={updateConfigLevel1}
-            className="px-5 py-3 mt-5 font-semibold text-white rounded-lg text-l "
-          >
-            Update ConfigLevel1
-          </button>
-          <button
-            onClick={updateConfigLevel2}
-            className="px-5 py-3 mt-5 font-semibold text-white rounded-lg text-l "
-          >
-            Update ConfigLevel2
+    <div className="overflow-hidden">
+      <div className="flex flex-col h-screen overflow-y-auto bg-room bg-center bg-cover">
+        <div className="flex flex-row justify-center gap-2 text-2xl font-bold text-pink-300">
+          Room Code: {roomId}
+          <button onClick={() => navigator.clipboard.writeText(roomId)}>
+            <svg
+              class="w-6 h-6 text-pink-300"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 18 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="m7.708 2.292.706-.706A2 2 0 0 1 9.828 1h6.239A.97.97 0 0 1 17 2v12a.97.97 0 0 1-.933 1H15M6 5v4a1 1 0 0 1-1 1H1m11-4v12a.97.97 0 0 1-.933 1H1.933A.97.97 0 0 1 1 18V9.828a2 2 0 0 1 .586-1.414l2.828-2.828A2 2 0 0 1 5.828 5h5.239A.97.97 0 0 1 12 6Z"
+              />
+            </svg>
           </button>
         </div>
-      ) : (
-        <div className="flex flex-col items-center justify-around w-3/5 xl:flex-row gap-y-2">
-          <PlayerSelect colorStrings={["#e0d1af", "#81a9db"]} />
-        </div>
-      )} */}
-      <div className="flex flex-col items-center justify-around w-3/5 xl:flex-row gap-y-2">
-        <MainButton handleClick={startGame} text="Start Game" />
-        <button
-          onClick={updateConfigLevel1}
-          className="px-5 py-3 mt-5 font-semibold text-black rounded-lg text-l "
-        >
-          {isSuccess && (
-            <CheckIcon style={{ width: rem(12), height: rem(12) }} />
-          )}
-          Update ConfigLevel1
-        </button>
-        <button
-          onClick={updateConfigLevel2}
-          className="px-5 py-3 mt-5 font-semibold text-black rounded-lg text-l "
-        >
-          {isSuccess2 && (
-            <CheckIcon style={{ width: rem(12), height: rem(12) }} />
-          )}
-          Update ConfigLevel2
-        </button>
-      </div>
 
-      <div className="flex flex-col items-center justify-around w-3/5 xl:flex-row gap-y-2">
-        {/* <PlayerSelect colorStrings={["#e0d1af", "#81a9db"]} /> */}
-        <PlayerSelect
-          colorStrings={colors}
-          colorStatus={colorStatus}
-          colorChecked={checkedColor}
-          isReady={isReady}
-          handleClick={checkColorBox}
-        />
+        <div className="flex flex-col items-center justify-center gap-2 text-black">
+          <div className="text-2xl font-bold text-pink-300 mt-4">
+            {isHost ? "Invite your friends!" : "Wait for host to Start!"}
+          </div>
+
+          <div className="text-xl font-bold mt-3">
+            {isSuccess && (
+              <p className="text-center text-green-500">
+                Successfully Updated Normal Game
+              </p>
+            )}
+            {isSuccess2 && (
+              <p className="text-center text-green-500">
+                Successfully Updated Hard Game
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center mt-10">
+          <PlayerSelect
+            colorStrings={colors}
+            colorStatus={colorStatus}
+            colorChecked={checkedColor}
+            isReady={isReady}
+            handleClick={checkColorBox}
+          />
+        </div>
+
+        <div class="flex items-center justify-center space-x-10 mt-10">
+          <div class="relative flex flex-col items-center">
+            <p className="text-xl font-bold text-pink-300 mb-5">Normal Game</p>
+            <button
+              onClick={updateConfigLevel1}
+              className="relative overflow-hidden"
+              style={{ left: "50%", transform: "translateX(-50%)" }}
+            >
+              <img
+                src={process.env.PUBLIC_URL + "/assets/left.jpg"}
+                alt="Normal Game"
+                className="w-[18rem] h-[10rem] rounded-2xl"
+              />
+
+              {isSuccess && (
+                <CheckIcon
+                  style={{
+                    width: "2rem",
+                    height: "2rem",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                />
+              )}
+            </button>
+          </div>
+
+          <div class="relative flex flex-col items-center">
+            <p className="text-xl font-bold text-pink-300 mb-5">Hard Game</p>
+            <button
+              onClick={updateConfigLevel2}
+              className="relative overflow-hidden"
+              style={{ left: "50%", transform: "translateX(-50%)" }}
+            >
+              <img
+                src={process.env.PUBLIC_URL + "/assets/right.jpg"}
+                alt="Hard Game"
+                className="w-[18rem] h-[10rem] rounded-2xl"
+              />
+              {isSuccess2 && (
+                <CheckIcon
+                  style={{
+                    width: "2rem",
+                    height: "2rem",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center mt-16  space-y-6">
+          <div className="flex flex-row items-center justify-center">
+            <MainButton
+              handleClick={isReady ? playerUnReady : playerReady}
+              text={isReady ? "Cancel" : "Ready"}
+            />
+          </div>
+
+          <div className="flex flex-row items-center justify-center">
+            <MainButton handleClick={startGame} text="Start Game" />
+          </div>
+        </div>
       </div>
     </div>
   );

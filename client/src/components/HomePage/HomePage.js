@@ -16,7 +16,8 @@ const HomePage = () => {
   };
 
   return (
-    <div className="w-full min-w-80rem min-h-screen flex flex-col">
+    <div className="overflow-hidden">
+    <div className="flex flex-col h-screen overflow-y-auto">
       {/* Navigation bar */}
       <nav className="w-full h-[40px] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 flex items-center justify-between">
         <img
@@ -24,6 +25,7 @@ const HomePage = () => {
           alt="Logo"
           className="mt-[2px] h-[70px] ml-2"
         />
+
         <button
           type="button"
           className="mr-7 bg-power-off-purple toggle-btn relative inline-flex items-center justify-between p-0 w-[65px] h-7 rounded-full focus:outline-none focus:ring-4 focus:ring-red-300 transition-colors duration-300"
@@ -50,9 +52,8 @@ const HomePage = () => {
       </nav>
 
       {/* Main content */}
-      <div className="bg-homepage bg-center min-bg flex-grow flex flex-col items-center justify-center space-y-10">
+      <div className="bg-homepage bg-center bg-cover flex-grow flex flex-col items-center justify-center space-y-10">
         <div className="mt-[200px] font-nanum-pen text-custom-pink font-bold text-[200px] leading-[54px]">
-          {" "}
           BLOCK BRAWL
         </div>
         <div className="mt-35 flex-grow flex flex-col items-center justify-center space-y-[50px]">
@@ -81,6 +82,7 @@ const HomePage = () => {
           {openModal2 && <JoinRoom closeModal={setOpenModal2} />}
         </div>
       </div>
+    </div>
     </div>
   );
 };

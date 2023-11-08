@@ -9,6 +9,8 @@ module.exports = {
         'power-off-purple':'#e560e0',
         'power-off': '#f48cef',
         'power-font': '#fdf0a2',
+        'pic-blue': '#4d7bb0',
+        'pic-pink': '#ea90ad',
       },
       textColor: {
         'custom-pink': '#e560e0'
@@ -17,6 +19,7 @@ module.exports = {
         'homepage': "url('../public/assets/homepage.jpg')",
         'loginpage': "url('../public/assets/loginpage.jpg')",
         'loading': "url('../public/assets/loader.gif')",
+        'room': "url('../public/assets/room.jpg')",
       },
       fontFamily: {
         'league-spartan': ['League Spartan', 'sans-serif'],
