@@ -13,7 +13,7 @@ export class Player {
     this.score = 0;
   }
 
-  upDate() {
+  toDto() {
     return {
       id: this.id,
       name: this.name,

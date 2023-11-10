@@ -14,6 +14,8 @@ import {
   StartGameOn,
   UpdateConfigOn,
   OnRoomInformationRequest,
+  BoardMovementOn,
+  BoardBreakOn,
 } from "./socket/on.js";
 
 // Load environment variables
@@ -44,6 +46,8 @@ io.on("connection", (socket) => {
   UpdateConfigOn(socket);
   StartGameOn(socket);
   OnRoomInformationRequest(socket);
+  BoardMovementOn(socket);
+  BoardBreakOn(socket);
 });
 
 // Connect to MongoDB and start the server

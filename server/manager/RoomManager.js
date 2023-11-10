@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 import { Player } from "../models/Player.js";
 import { Room } from "../models/Room.js";
 import { generateString } from "./util.js";
-import { GameUpdate } from "../socket/emit.js";
+import { GameUpdate, GameTimeChanged, GameEnded } from "../socket/emit.js";
 
 let rooms = new Map();
 
@@ -42,25 +42,17 @@ export class RoomManager {
   static updateConfig(roomId, config) {
     let room = rooms.get(roomId);
     if (room && config) {
-      const { boardSize, roundTime, breakTime } = config;
+      //boardSize,
+      const { level, roundTime, breakTime } = config;
 
-      // Check all input parameters meet certain conditions
-      if (isNaN(boardSize) || isNaN(roundTime) || isNaN(breakTime)) {
+      // Check all input parameters meet certain conditions isNaN(boardSize) ||
+      if (isNaN(level) || isNaN(roundTime) || isNaN(breakTime)) {
         return false;
       }
-      // const newRoomSize = Number(roomSize);
-      // if (newRoomSize < room.players.size) {
-      //   return false;
-      // }
 
-      const newBoardSize = Number(boardSize);
-      // if (!(newBoardSize >= 5 && newBoardSize <= 20)) {
-      //   return false;
-      // }
+      const newlevel = Number(level);
 
-      // room.config.roomSize = newRoomSize;
-
-      room.config.boardSize = newBoardSize;
+      room.config.level = newlevel;
 
       const newRoundTime = Number(roundTime);
       room.config.roundTime = newRoundTime;
@@ -83,7 +75,51 @@ export class RoomManager {
         return false;
       }
       room.isOpen = false;
-      room.initBoard(room.config.boardSize);
+      room.initPlayerPosition();
+      room.initBoard(room.config.level);
+
+      room.initTimer(
+        () => {
+          room.closeGame();
+
+          let numSurvivor = 0;
+          /**
+           * @type {Player} - breaker
+           */
+          let breaker;
+          room.players.forEach((player) => {
+            player.isReady = false;
+            if (player.isAlive && !player.isBreaker) {
+              player.score++;
+              numSurvivor++;
+            }
+            if (player.isBreaker) {
+              breaker = player;
+            }
+          });
+          if (numSurvivor == 0) {
+            breaker.score += room.players.size;
+          }
+          // clear color status
+          room.colorStatus = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+          ];
+
+          GameEnded(roomId, room.toDto());
+        },
+        (time) => {
+          room.checkIsAllPlayerDead();
+          GameTimeChanged(roomId, time);
+        }
+      );
 
       GameUpdate(roomId, room.toDto());
       return true;
@@ -113,6 +149,41 @@ export class RoomManager {
         player.isReady = false;
         GameUpdate(roomId, room.toDto());
       }
+    }
+  }
+
+  static movePlayer(roomId, playerId, x, y, direction) {
+    let room = rooms.get(roomId);
+    if (room) {
+      let player = room.players.get(playerId);
+      if (player && room.board) {
+        player.x = Number(x);
+        player.y = Number(y);
+        player.direction = direction;
+        GameUpdate(roomId, room.toDto());
+        if (!room.checkPlayerAlive(playerId)) {
+          this.playerDead(roomId, player);
+        }
+      }
+    }
+  }
+  static playerDead(roomId, player) {
+    const message = player.name + " is dead!";
+  }
+
+  static breakTile(roomId, x, y) {
+    let room = rooms.get(roomId);
+    if (room && room.board) {
+      room.board.break(x, y);
+      console.log("breakTile");
+
+      // Check whether there is a player killed on the broken tile
+      room.players.forEach((player, playerId) => {
+        if (!room.checkPlayerAlive(playerId)) {
+          this.playerDead(roomId, player);
+        }
+      });
+      GameUpdate(roomId, room.toDto());
     }
   }
 

@@ -51,6 +51,12 @@ export function UpdateConfigOn(socket) {
   });
 }
 
+export function BoardBreakOn(socket) {
+  socket.on("break", ({ roomId, x, y }, callback) => {
+    RoomManager.breakTile(roomId, x, y);
+  });
+}
+
 export function PlayerUnReadyOn(socket) {
   socket.on("player-unready", ({ roomId, playerId }) => {
     RoomManager.playerUnReady(roomId, playerId);
@@ -62,5 +68,11 @@ export function OnRoomInformationRequest(socket) {
     if (callback) {
       callback(RoomManager.getRoomInformation(roomId));
     }
+  });
+}
+
+export function BoardMovementOn(socket) {
+  socket.on("movement", ({ roomId, x, y, direction }, callback) => {
+    RoomManager.movePlayer(roomId, socket.id, x, y, direction);
   });
 }

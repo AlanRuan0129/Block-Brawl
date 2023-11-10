@@ -19,7 +19,8 @@ export const AppContext = React.createContext({
   setColorStatus: (colorStatus) => {},
   config: {
     roomSize: 3,
-    boardSize: 9,
+    // boardSize: 9,
+    level: 1,
     roundTime: 60,
     breakTime: 0.0,
   },
@@ -51,7 +52,8 @@ export function GameContext({ children }) {
 
   const [config, setConfig] = useState({
     roomSize: 8,
-    boardSize: 9,
+    //boardSize: 9,
+    level: 1,
     roundTime: 30,
     breakTime: 0.5,
   });

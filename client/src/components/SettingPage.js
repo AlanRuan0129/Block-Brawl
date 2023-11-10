@@ -71,7 +71,8 @@ export default function SettingPage() {
 
   const updateConfigLevel1 = () => {
     const Config1 = {
-      boardSize: 9,
+      //  boardSize: 9,
+      level: 1,
       roundTime: 60,
       breakTime: 0.0,
     };
@@ -84,7 +85,8 @@ export default function SettingPage() {
 
   const updateConfigLevel2 = () => {
     const Config2 = {
-      boardSize: 9,
+      // boardSize: 9,
+      level: 2,
       roundTime: 120,
       breakTime: 1.0,
     };
