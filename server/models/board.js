@@ -1,10 +1,4 @@
 export class Board {
-  // constructor(size) {
-  //   this.board = Array(size)
-  //     .fill()
-  //     .map(() => Array(size).fill(1));
-  // }
-
   constructor(level) {
     if (level === 1) {
       this.board = [
@@ -47,18 +41,8 @@ export class Board {
   }
 
   breakOnly(x, y) {
-    // Toggle the state of the ice block: if it's intact (1), break it (set to 0);
-    // if it's already broken (0), repair it (set back to 1).
     this.board[x][y] = 1;
   }
-
-  // check(x, y) {
-  //   if (this.board[x][y] === 1) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   check(x, y) {
     if (this.board[x][y] === 3) {

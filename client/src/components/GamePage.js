@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../GameContext";
 import { Modal } from "./Model";
 import { convertToMS } from "./Timer";
+import { ProgressBar } from "./ProgressBar";
 import {
   changeDirection,
   breakSetBlock,
@@ -288,7 +289,9 @@ function GamePage() {
           mainPrompt={<h1>for leaderboard</h1>}
           buttonPrompt={"Back to Room"}
         />
-        {/*Timer for the game*/}
+        <div>
+          <ProgressBar currentTime={currentTime} maxTime={config.roundTime} />
+        </div>
         <div>{convertToMS(currentTime)}</div>
 
         <div>
