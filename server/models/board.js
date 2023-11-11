@@ -27,7 +27,7 @@ export class Board {
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -52,11 +52,19 @@ export class Board {
     this.board[x][y] = 1;
   }
 
+  // check(x, y) {
+  //   if (this.board[x][y] === 1) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
   check(x, y) {
-    if (this.board[x][y] === 1) {
-      return true;
-    } else {
+    if (this.board[x][y] === 3) {
       return false;
+    } else {
+      return true;
     }
   }
 

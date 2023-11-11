@@ -20,6 +20,7 @@ module.exports = {
         room: "url('../public/assets/room.jpg')",
         floor: "url('../public/assets/floor.png')",
         floor_blue: "url('../public/assets/floor_blue.png')",
+        floor_purple: "url('../public/assets/floor_purple.png')",
       },
       fontFamily: {
         "league-spartan": ["League Spartan", "sans-serif"],

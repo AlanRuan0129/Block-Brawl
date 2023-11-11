@@ -235,10 +235,31 @@ function GamePage() {
     );
   };
 
+  const renderIceType3 = (iceSize, row, col, players) => {
+    // ...渲染ice为0的逻辑
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_purple"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+
   // 创建映射表
   const iceRenderers = {
     0: renderIceType0,
     1: renderIceType1,
+    3: renderIceType3,
   };
 
   return (
