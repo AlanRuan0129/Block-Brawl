@@ -175,7 +175,23 @@ export class RoomManager {
     let room = rooms.get(roomId);
     if (room && room.board) {
       room.board.break(x, y);
-      console.log("breakTile");
+      // console.log("breakTile");
+
+      // Check whether there is a player killed on the broken tile
+      room.players.forEach((player, playerId) => {
+        if (!room.checkPlayerAlive(playerId)) {
+          this.playerDead(roomId, player);
+        }
+      });
+      GameUpdate(roomId, room.toDto());
+    }
+  }
+
+  static breakTileOnly(roomId, x, y) {
+    let room = rooms.get(roomId);
+    if (room && room.board) {
+      room.board.breakOnly(x, y);
+      // console.log("breakTile");
 
       // Check whether there is a player killed on the broken tile
       room.players.forEach((player, playerId) => {

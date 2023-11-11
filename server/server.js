@@ -16,6 +16,7 @@ import {
   OnRoomInformationRequest,
   BoardMovementOn,
   BoardBreakOn,
+  BoardBreakOnOnly,
 } from "./socket/on.js";
 
 // Load environment variables
@@ -48,6 +49,7 @@ io.on("connection", (socket) => {
   OnRoomInformationRequest(socket);
   BoardMovementOn(socket);
   BoardBreakOn(socket);
+  BoardBreakOnOnly(socket);
 });
 
 // Connect to MongoDB and start the server

@@ -57,6 +57,12 @@ export function BoardBreakOn(socket) {
   });
 }
 
+export function BoardBreakOnOnly(socket) {
+  socket.on("breakonly", ({ roomId, x, y }, callback) => {
+    RoomManager.breakTileOnly(roomId, x, y);
+  });
+}
+
 export function PlayerUnReadyOn(socket) {
   socket.on("player-unready", ({ roomId, playerId }) => {
     RoomManager.playerUnReady(roomId, playerId);

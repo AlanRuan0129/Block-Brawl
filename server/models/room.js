@@ -81,6 +81,7 @@ export class Room {
 
   checkPlayerAlive(playerId) {
     const player = this.getPlayer(playerId);
+    console.log(player);
     if (
       player &&
       player.isAlive &&
@@ -88,9 +89,11 @@ export class Room {
       this.board &&
       !this.board.check(player.x, player.y)
     ) {
+      console.log("isAlivefalse");
       player.isAlive = false;
       return false;
     } else {
+      console.log("isAlive");
       return true;
     }
   }

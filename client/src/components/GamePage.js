@@ -36,15 +36,7 @@ function GamePage() {
   const [players, setPlayers] = useState([]);
   const [iceSize, setIceSize] = useState(10);
 
-  const [me, setMe] = useState({
-    id: null,
-    name: null,
-    isAlive: true,
-    isBreaker: false,
-    x: 0,
-    y: 0,
-    direction: null,
-  });
+  const [me, setMe] = useState({});
   const [board, setBoard] = useState([]);
   const [done, setDone] = useState(false);
 
@@ -76,6 +68,19 @@ function GamePage() {
     setIsBreaking(false);
   };
 
+  const handleBreak = async (row, col) => {
+    setIsBreaking(true);
+    await new Promise((resolve) =>
+      setTimeout(resolve, config.breakTime * 1000)
+    );
+    // board[row][col] = 0;
+    // 切换冰的状态：如果已破则复原，如果未破则破坏
+    board[row][col] = 1;
+    setBoard([...board]);
+    socket.emit("breakonly", { roomId, y: col, x: row });
+    setIsBreaking(false);
+  };
+
   const calculateSize = () => {
     const initWidth = window.innerWidth * 0.65;
     const initHeight = window.innerHeight - 20;
@@ -101,7 +106,8 @@ function GamePage() {
         if (keyName === " ") {
           // Space is typically denoted by " " in event.key
           // handle break ice using space
-          breakSetBlock(me, board, handleSetBreak);
+
+          breakSetBlock(me, board, handleBreak);
         } else {
           // movement of breakers
           //breakerMove(keyName, me, board);
@@ -110,7 +116,16 @@ function GamePage() {
       } else if (!me.isBreaker) {
         changeDirection(me, keyName);
         // normal non-breaker players on the ice
-        playerMove(keyName, me, board.length, board);
+
+        if (keyName === " ") {
+          // Space is typically denoted by " " in event.key
+          // handle break ice using space
+          breakSetBlock(me, board, handleSetBreak);
+        } else {
+          // movement of breakers
+          //breakerMove(keyName, me, board);
+          playerMove(keyName, me, board.length, board);
+        }
       }
       socket.emit("movement", {
         roomId,
@@ -139,6 +154,12 @@ function GamePage() {
       });
 
       setLeaders(room.players);
+      // Find 'me' in the room's player list and update its 'isAlive' status
+      const meInRoom = room.players.find((player) => player.id === socket.id);
+      if (meInRoom) {
+        setMe((prevMe) => ({ ...prevMe, isAlive: meInRoom.isAlive }));
+      }
+
       // Set the message to display and get the winner
       if (
         room.players.filter((player) => player.isAlive && !player.isBreaker)
@@ -151,6 +172,7 @@ function GamePage() {
       //Open Modal window
       setShow(true);
     };
+
     //Update time
     const onGameTimeChanged = (time) => {
       setCurrentTime(time);
