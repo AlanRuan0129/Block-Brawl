@@ -29,7 +29,7 @@ export function playerMove(keyName, player, boardSize, board) {
   // 确保新位置在board边界内
   if (newX >= 0 && newX < boardSize && newY >= 0 && newY < boardSize) {
     // 如果新位置的ice不为0，则允许移动
-    if (board[newX][newY] !== 0) {
+    if (board[newX][newY] !== 0 && board[newX][newY] !== 5) {
       player.x = newX;
       player.y = newY;
     }

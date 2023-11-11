@@ -63,7 +63,16 @@ function GamePage() {
     );
     // board[row][col] = 0;
     // 切换冰的状态：如果已破则复原，如果未破则破坏
-    board[row][col] = board[row][col] === 1 ? 0 : 1;
+    // board[row][col] = board[row][col] === 1 ? 0 : 1;
+    if (board[row][col] === 1) {
+      board[row][col] = 0;
+    } else if (board[row][col] === 0) {
+      board[row][col] = 1;
+    } else if (board[row][col] === 4) {
+      board[row][col] = 5;
+    } else if (board[row][col] === 5) {
+      board[row][col] = 4;
+    }
     setBoard([...board]);
     socket.emit("break", { roomId, y: col, x: row });
     setIsBreaking(false);
@@ -139,7 +148,7 @@ function GamePage() {
             setMe((prevMe) => ({
               ...prevMe,
               score: prevMe.score + 1,
-            }));           
+            }));
           }
         }
       }
@@ -291,12 +300,33 @@ function GamePage() {
     );
   };
 
+  const renderIceType5 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_red"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+
   // 创建映射表
   const iceRenderers = {
     0: renderIceType0,
     1: renderIceType1,
     3: renderIceType3,
     4: renderIceType4,
+    5: renderIceType5,
   };
 
   return (
