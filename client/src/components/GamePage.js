@@ -110,22 +110,32 @@ function GamePage() {
 
           breakSetBlock(me, board, handleBreak);
         } else {
-          // movement of breakers
-          //breakerMove(keyName, me, board);
           playerMove(keyName, me, board.length, board);
+          //  playerMove(keyName, me, board.length, setBoard, board);
         }
       } else if (!me.isBreaker) {
         changeDirection(me, keyName);
         // normal non-breaker players on the ice
 
         if (keyName === " ") {
-          // Space is typically denoted by " " in event.key
-          // handle break ice using space
           breakSetBlock(me, board, handleSetBreak);
         } else {
-          // movement of breakers
-          //breakerMove(keyName, me, board);
           playerMove(keyName, me, board.length, board);
+          //playerMove(keyName, me, board.length, setBoard, board);
+          // 现在检查移动后的新位置
+          const newValue = board[me.x][me.y];
+
+          // 如果玩家移动到的位置的值是 4
+          if (newValue === 4) {
+            // 则更新 board 状态
+            setBoard((prevBoard) => {
+              // 创建 board 状态的深拷贝
+              const newBoard = prevBoard.map((row) => [...row]);
+              // 将位置的值从 4 改为 5
+              newBoard[me.x][me.y] = 1;
+              return newBoard;
+            });
+          }
         }
       }
       socket.emit("movement", {
@@ -256,11 +266,32 @@ function GamePage() {
     );
   };
 
+  const renderIceType4 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_orange"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+
   // 创建映射表
   const iceRenderers = {
     0: renderIceType0,
     1: renderIceType1,
     3: renderIceType3,
+    4: renderIceType4,
   };
 
   return (

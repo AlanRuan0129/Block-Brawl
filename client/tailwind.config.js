@@ -21,6 +21,8 @@ module.exports = {
         floor: "url('../public/assets/floor.png')",
         floor_blue: "url('../public/assets/floor_blue.png')",
         floor_purple: "url('../public/assets/floor_purple.png')",
+        floor_red: "url('../public/assets/floor_red.png')",
+        floor_orange: "url('../public/assets/floor_orange.png')",
       },
       fontFamily: {
         "league-spartan": ["League Spartan", "sans-serif"],

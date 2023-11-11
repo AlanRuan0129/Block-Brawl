@@ -17,7 +17,7 @@ export class Board {
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -42,6 +42,26 @@ export class Board {
 
   breakOnly(x, y) {
     this.board[x][y] = 1;
+  }
+
+  // Method to get the value of a tile at (x, y).
+  getTile(x, y) {
+    if (x >= 0 && x < this.board.length && y >= 0 && y < this.board.length) {
+      return this.board[x][y];
+    } else {
+      throw new Error(
+        "Attempted to access a tile out of the board boundaries."
+      );
+    }
+  }
+
+  // Method to set the value of a tile at (x, y).
+  setTile(x, y, value) {
+    if (x >= 0 && x < this.board.length && y >= 0 && y < this.board.length) {
+      this.board[x][y] = value;
+    } else {
+      throw new Error("Attempted to set a tile out of the board boundaries.");
+    }
   }
 
   check(x, y) {

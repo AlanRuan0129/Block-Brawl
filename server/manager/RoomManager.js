@@ -160,6 +160,11 @@ export class RoomManager {
         player.x = Number(x);
         player.y = Number(y);
         player.direction = direction;
+
+        if (!player.isBreaker && room.board.getTile(player.x, player.y) === 4) {
+          room.board.setTile(player.x, player.y, 1);
+        }
+
         GameUpdate(roomId, room.toDto());
         if (!room.checkPlayerAlive(playerId)) {
           this.playerDead(roomId, player);
