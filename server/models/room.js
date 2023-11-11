@@ -79,23 +79,36 @@ export class Room {
     clearInterval(this.timer);
   }
 
+  // Checks if non-breaker players are colliding with the breaker or are in unsafe positions
   checkPlayerAlive(playerId) {
     const player = this.getPlayer(playerId);
-    console.log(player);
-    if (
-      player &&
-      player.isAlive &&
-      !player.isBreaker &&
-      this.board &&
-      !this.board.check(player.x, player.y)
-    ) {
-      console.log("isAlivefalse");
-      player.isAlive = false;
-      return false;
-    } else {
-      console.log("isAlive");
-      return true;
+    const host = this.getPlayer(this.hostId); // host is the breaker
+
+    // Check the moving non-breaker player
+    if (player && player.isAlive && !player.isBreaker) {
+      if (
+        !this.board.check(player.x, player.y) ||
+        (player.x === host.x && player.y === host.y)
+      ) {
+        player.isAlive = false;
+        return false;
+      }
     }
+
+    // Check all other non-breaker players for collision with the breaker
+    this.players.forEach((otherPlayer) => {
+      if (
+        otherPlayer.id !== playerId &&
+        otherPlayer.isAlive &&
+        !otherPlayer.isBreaker
+      ) {
+        if (otherPlayer.x === host.x && otherPlayer.y === host.y) {
+          otherPlayer.isAlive = false;
+        }
+      }
+    });
+
+    return true; // Player remains alive if no collision or unsafe position
   }
 
   checkIsAllPlayerDead() {
