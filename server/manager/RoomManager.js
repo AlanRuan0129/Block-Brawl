@@ -162,6 +162,7 @@ export class RoomManager {
         player.direction = direction;
 
         if (!player.isBreaker && room.board.getTile(player.x, player.y) === 4) {
+          player.score++;
           room.board.setTile(player.x, player.y, 1);
         }
 

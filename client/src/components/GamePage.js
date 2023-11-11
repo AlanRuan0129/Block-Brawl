@@ -135,6 +135,11 @@ function GamePage() {
               newBoard[me.x][me.y] = 1;
               return newBoard;
             });
+
+            setMe((prevMe) => ({
+              ...prevMe,
+              score: prevMe.score + 1,
+            }));           
           }
         }
       }
