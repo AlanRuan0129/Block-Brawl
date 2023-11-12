@@ -90,7 +90,7 @@ export class RoomManager {
           room.players.forEach((player) => {
             player.isReady = false;
             if (player.isAlive && !player.isBreaker) {
-              player.score++;
+              // player.score++;
               numSurvivor++;
             }
             if (player.isBreaker) {

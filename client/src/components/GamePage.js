@@ -7,6 +7,7 @@ import { AppContext } from "../GameContext";
 import { Modal } from "./Model";
 import { convertToMS } from "./Timer";
 import { ProgressBar } from "./ProgressBar";
+import { RankingList } from "./RankingList";
 import {
   changeDirection,
   breakSetBlock,
@@ -350,9 +351,9 @@ function GamePage() {
           title={<div>{winningMessage}</div>}
           show={show}
           pageJump={() => {
-            navigate("/" + roomId.toString() + "/idle");
+            navigate("/Layout/setting");
           }}
-          mainPrompt={<h1>for leaderboard</h1>}
+          mainPrompt={<RankingList list={leaderboardList} myID={me.id} />}
           buttonPrompt={"Back to Room"}
         />
         <div>
