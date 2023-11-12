@@ -19,7 +19,14 @@ export class Room {
       breakerName: host.name,
     };
 
-    this.colors = ["#e0d1af", "#81a9db", "#ffd11a", "#f19cb7"];
+    this.colors = [
+      "#e0d1af",
+      "#81a9db",
+      "#ffd11a",
+      "#f19cb7",
+      "#ffd11a",
+      "#f19cb7",
+    ];
 
     this.colorStatus = [null, null, null, null, null, null, null, null, null];
   }

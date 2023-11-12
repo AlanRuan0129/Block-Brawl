@@ -1,7 +1,7 @@
 import { ColorSwatch, CheckIcon } from "@mantine/core";
 
 export function PlayerSelect(props) {
-  const swatches = props.colorStrings?.map((color, index) => (
+  const swatches = props.colorStrings.slice(0, 4)?.map((color, index) => (
     <div className="w-1/4 p-2" key={`avatar-${index}`}>
       <div className="w-40 h-40 flex justify-center items-center overflow-hidden">
         <img

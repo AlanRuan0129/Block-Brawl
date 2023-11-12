@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
 import { PlayerSelect } from "./PlayerSelect.js";
+import { HostSelect } from "./HostSelect.js";
 import { AppContext } from "../GameContext.js";
 import socket from "../Socket";
 import { MainButton } from "./MainButton/MainButton.js";
@@ -170,15 +171,29 @@ export default function SettingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center mt-10">
-          <PlayerSelect
-            colorStrings={colors}
-            colorStatus={colorStatus}
-            colorChecked={checkedColor}
-            isReady={isReady}
-            handleClick={checkColorBox}
-          />
-        </div>
+        {isHost ? (
+          <div className="flex flex-col items-center mt-10">
+            <HostSelect
+              colorStrings={colors}
+              colorStatus={colorStatus}
+              colorChecked={checkedColor}
+              isReady={isReady}
+              handleClick={checkColorBox}
+              isHost={isHost}
+            />
+          </div>
+        ) : (
+          <div className="flex flex-col items-center mt-10">
+            <PlayerSelect
+              colorStrings={colors}
+              colorStatus={colorStatus}
+              colorChecked={checkedColor}
+              isReady={isReady}
+              handleClick={checkColorBox}
+              isHost={isHost}
+            />
+          </div>
+        )}
 
         <div class="flex items-center justify-center space-x-10 mt-10">
           <div class="relative flex flex-col items-center">
