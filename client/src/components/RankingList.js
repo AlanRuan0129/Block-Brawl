@@ -4,18 +4,18 @@ import { AppContext } from "../GameContext";
 export function RankingList({ list, myID }) {
   return (
     <div>
-      <div className="mt-5 w-96 h-0.5 bg-white"></div>
+      <div className="mt-5 w-96 h-0.5"></div>
 
       {/* Titles */}
       <div className="flex flex-row pt-2">
         <div className="w-1/4">
-          <p className="text-xl font-medium text-white">Ranking</p>
+          <p className="text-xl font-medium text-purple-600">Ranking</p>
         </div>
         <div className="w-1/2 flex justify-center">
-          <p className="text-xl font-medium text-white">Player</p>
+          <p className="text-xl font-medium text-purple-600">Player</p>
         </div>
         <div className="w-1/4 flex justify-center">
-          <p className="text-xl font-medium text-white">Score</p>
+          <p className="text-xl font-medium text-purple-600">Score</p>
         </div>
       </div>
       <div>

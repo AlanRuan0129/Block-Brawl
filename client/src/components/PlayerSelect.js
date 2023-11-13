@@ -18,7 +18,11 @@ export function PlayerSelect(props) {
           component="button"
           disabled={props.colorStatus[index] || props.isReady}
           radius="lg"
-          onClick={() => props.handleClick(index)}
+          onClick={() => {
+            props.handleClick(index);
+            console.log(index);
+           
+          }}
           style={{ color: "#000000", marginTop: "1rem" }}
         >
           {index === props.colorChecked &&
