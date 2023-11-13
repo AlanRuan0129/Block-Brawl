@@ -193,7 +193,7 @@ function GamePage() {
       ) {
         setWinner("The Monster Wins !!!");
       } else {
-        setWinner("babo Win !!!");
+        setWinner("Babo Win !!!");
       }
       //Open Modal window
       setShow(true);
@@ -230,7 +230,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center bg-no-repeat bg-center bg-cover shadow-md player bg-floor"
+        className="flex items-center justify-center bg-no-repeat bg-center bg-cover bg-center shadow-md player bg-floor"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col)) {
@@ -250,7 +250,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_blue"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-block bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -270,7 +270,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_purple"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player  bg-fire bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -290,7 +290,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_orange"
+        className="flex items-center justify-center m-2 bg-no-repeat  bg-center player bg-floor_bean bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -310,7 +310,142 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_red"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-block_bean bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+
+  const renderIceType6 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType7 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-roof_red bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType8 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-roof_blue bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType9 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-stall bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+
+  const renderIceType11 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall_left bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType12 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall_right bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType13 = (iceSize, row, col, players) => {
+    // for groundfood
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall_water bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -328,73 +463,94 @@ function GamePage() {
     3: renderIceType3,
     4: renderIceType4,
     5: renderIceType5,
+    6: renderIceType6,
+    7: renderIceType7,
+    8: renderIceType8,
+    9: renderIceType9,
+    11: renderIceType11,
+    12: renderIceType12,
+    13: renderIceType13,
   };
 
   return (
-    <div>
-      {
-        me.isAlive ? (
-          <h1>alive</h1>
-        ) : (
-          <h1>dead</h1>
-        ) /* top right symbol for indicate the player out, which is "spectating" */
-      }
-      {!me.isAlive && (
-        <div className="absolute flex flex-col p-5 text-ice-3">
-          <div className="font-bold">Spectating</div>
-        </div>
-      )}
-
-      <div>
-        {/* Modal window for the leaderboard when game ends */}
-        <Modal
-          title={<div>{winningMessage}</div>}
-          show={show}
-          pageJump={() => {
-            navigate("/Layout/setting");
-          }}
-          mainPrompt={<RankingList list={leaderboardList} myID={me.id} />}
-          buttonPrompt={"Back to Room"}
-        />
-        <div>
-          <ProgressBar currentTime={currentTime} maxTime={config.roundTime} />
-        </div>
-        <div>{convertToMS(currentTime)}</div>
-
-        <div>
-          {/* Dead indicator, overlaying string */}
-          {!me.isAlive && showOut && (
-            <div className="absolute z-40 flex flex-row animate-bounce">
-              <div
-                style={{
-                  fontSize: 100,
-                  textShadow:
-                    "-2px 0 #041F32, 0 2px #FFFFFF, 2px 0 #041F32, 0 -2px #041F32",
-                }}
-                className="text-ice-5 text-9xl"
-                onClick={() => setShowOut(false)}
-              >
-                You're out!
+    <div className="overflow-hidden">
+      <div className="flex flex-col h-screen overflow-y-auto bg-room bg-center bg-cover font-bold text-pink-300">
+        <div className="relative flex text-2xl item-center justify-center">
+          {
+            me.isAlive ? (
+              <div className="w-[4.5rem] h-[4.5rem]">
+                <img src="/assets/heart.png" alt="Alive"/>
               </div>
+            ) : (
+              <div className="w-[3rem] h-[3rem] mt-1 mb-1">
+                <img src="/assets/die.png" alt="Die"/>
+              </div>
+            ) /* top right symbol for indicate the player out, which is "spectating"  justify-end right-5 */
+          }
+          {!me.isAlive && (
+            <div className="absolute flex flex-row justify-center p-[7.5rem]">
+              <div className="">Spectating</div>
             </div>
           )}
+        </div>
 
-          <div className="">
-            {board
-              ? board.map((rowItems, row) => {
-                  return (
-                    <div className="flex flex-row" key={row}>
-                      {rowItems.map((ice, col) => {
-                        // 调用映射表中的渲染函数
-                        const renderFunc = iceRenderers[ice];
-                        return renderFunc
-                          ? renderFunc(iceSize, row, col, players)
-                          : null;
-                      })}
-                    </div>
-                  );
-                })
-              : null}
+        <div>
+          {/* Modal window for the leaderboard when game ends */}
+          <Modal
+            title={<div>{winningMessage}</div>}
+            show={show}
+            pageJump={() => {
+              navigate("/homepage");
+            }}
+            mainPrompt={<RankingList list={leaderboardList} myID={me.id} />}
+            buttonPrompt={"Back to Room"}
+          />
+
+          <div>
+            <ProgressBar currentTime={currentTime} maxTime={config.roundTime} />
+          </div>
+          <div className="flex text-2xl item-center justify-center mt-2 mb-10">
+            {convertToMS(currentTime)}
+          </div>
+
+          <div>
+            <div className="flex item-center justify-center">
+            {/* Dead indicator, overlaying string */}
+            {!me.isAlive && showOut && (
+              <div className="absolute z-40 flex flex-row animate-bounce">
+                <div
+                  style={{
+                    fontSize: 100,
+                  }}
+                  className="text-custom-text-pink text-9xl"
+                  onClick={() => setShowOut(false)}
+                >
+                  You're die!
+                </div>
+              </div>
+            )}
+            </div>
+
+            <div className="">
+              {board
+                ? board.map((rowItems, row) => {
+                    return (
+                      <div
+                        className="flex flex-row item-center justify-center"
+                        key={row}
+                      >
+                        {rowItems.map((ice, col) => {
+                          // 调用映射表中的渲染函数
+                          const renderFunc = iceRenderers[ice];
+                          return renderFunc
+                            ? renderFunc(iceSize, row, col, players)
+                            : null;
+                        })}
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
           </div>
         </div>
       </div>
