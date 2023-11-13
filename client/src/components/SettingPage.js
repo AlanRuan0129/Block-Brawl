@@ -88,7 +88,8 @@ export default function SettingPage() {
     const Config2 = {
       // boardSize: 9,
       level: 2,
-      roundTime: 120,
+      // roundTime: 120,
+      roundTime: 36000,
       breakTime: 1.0,
     };
     socket.emit("update-config", { roomId, config: Config2 }, (isSuccess) => {
@@ -118,7 +119,7 @@ export default function SettingPage() {
         setColorStatus(game.colorStatus);
       }
       if (game.board) {
-        navigate("/Layout/game", { state: { game: game } });
+        navigate("/game", { state: { game: game } });
       }
     };
     socket.on("game-update", startGame);

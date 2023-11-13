@@ -32,17 +32,18 @@ export function Modal({ show, pageJump, mainPrompt, buttonPrompt, title }) {
         " bg-black bg-opacity-80 flex items-center justify-center"
       }
     >
-      <section className="bg-white p-8 rounded shadow-lg text-center transform -translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2">
+      <section className="bg-white p-8 rounded-lg shadow-lg text-center transform -translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2">
         {/* The component at the top of the modal window */}
-        <div className="text-purple-600">{title}</div>
-        <h3 className="text-pink-500">
+        <div className="text-3xl text-custom-pink mb-5 ">{title}</div>
+        <div className="border border-power-off border-[0.17rem]"></div>
+        <h3 className="text-pink-500 mt-[-1rem]">
           {/* Main prompt message */}
           {mainPrompt}
         </h3>
         {/* The button and its function on the window */}
         <button
           onClick={pageJump}
-          className="bg-purple-500 text-white font-bold py-2 px-4 rounded hover:bg-purple-700 transition duration-300 ease-in-out mt-4"
+          className="bg-game-pink text-white font-bold py-2 px-4 rounded-lg"
         >
           {buttonPrompt}
         </button>
