@@ -6,22 +6,23 @@ import Login from "./components/Login/index";
 import Layout from "./components/Layout";
 import SettingPage from "./components/SettingPage";
 import GamePage from "./components/GamePage";
+import ParentComponent from "./components/Textwillmove";
 
 function App() {
   const user = localStorage.getItem("token");
   return (
     <Routes>
       {user && <Route path="/" exact element={<Home />} />}
-
       <Route path="/homepage" exact element={<Home />} />
-
       <Route path="/signup" exact element={<Signup />} />
       <Route path="/login" exact element={<Login />} />
-
-      <Route path="/Layout" element={<Layout />}>
+      {/* <Route path="/Layout" element={<Layout />}>
         <Route path="setting" element={<SettingPage />} />
         <Route path="game" element={<GamePage />} />
-      </Route>
+      </Route> */}
+
+      <Route path="/Layout/setting" element={<ParentComponent />} />
+      <Route path="game" element={<GamePage />} />
 
       <Route path="/" element={<Navigate replace to="/login" />} />
     </Routes>

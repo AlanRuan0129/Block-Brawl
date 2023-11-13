@@ -7,7 +7,7 @@ export function MainButton(props) {
       >
         {props.text}
       </button>
-      <div className="px-6 py-3 mt-2 text-xl font-semibold">{props.text}</div>
+      {/* <div className="px-6 py-3 mt-2 text-xl font-semibold">{props.text}</div> */}
     </div>
   );
 }

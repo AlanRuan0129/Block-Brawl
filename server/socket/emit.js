@@ -15,3 +15,8 @@ export function GameEnded(roomId, gameState) {
 export function GameTimeChanged(roomId, time) {
   getSocketIO().to(roomId).emit("game-time-changed", time);
 }
+
+export function MessageToChat(roomId, name, value, type) {
+  const message = { name: name, value: value, type: type };
+  getSocketIO().to(roomId).emit("message-to-chat", message);
+}

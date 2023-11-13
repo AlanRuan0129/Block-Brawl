@@ -1,4 +1,5 @@
 import { RoomManager } from "../manager/RoomManager.js";
+import { MessageToChat } from "./emit.js";
 
 export function CreateRoomOn(socket) {
   socket.on("create-room", ({ name }, callback) => {
@@ -23,6 +24,23 @@ export function JoinRoomOn(socket) {
     }
   });
 }
+
+// // Outside RoomManager class, in your socket event handlers
+// export function JoinRoomOn(socket) {
+//   socket.on("join-room", ({ roomId, name }, callback) => {
+//     const result = RoomManager.joinRoom(socket, roomId, name);
+//     if (result.error) {
+//       // If there is an error, send it back through the callback
+//       callback({ error: result.error });
+//     } else if (result.room) {
+//       // If a room object is returned, send its status back
+//       callback(result.room.toDto());
+//     } else {
+//       // Handle any other cases (this shouldn't happen with the above logic)
+//       callback({ error: "An unexpected error occurred." });
+//     }
+//   });
+// }
 
 export function StartGameOn(socket) {
   socket.on("start-game", ({ roomId }, callback) => {
@@ -80,5 +98,11 @@ export function OnRoomInformationRequest(socket) {
 export function BoardMovementOn(socket) {
   socket.on("movement", ({ roomId, x, y, direction }, callback) => {
     RoomManager.movePlayer(roomId, socket.id, x, y, direction);
+  });
+}
+
+export function MessageOn(socket) {
+  socket.on("send-message", ({ roomID, name, chatMessage }, callback) => {
+    MessageToChat(roomID, name, chatMessage, "chat");
   });
 }
