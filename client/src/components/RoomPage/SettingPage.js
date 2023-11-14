@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
 import { PlayerSelect } from "./PlayerSelect.js";
 import { HostSelect } from "./HostSelect.js";
-import { AppContext } from "../GameContext.js";
-import socket from "../Socket";
-import { MainButton } from "./MainButton/MainButton.js";
+import { AppContext } from "../../GameContext.js";
+import socket from "../../Socket.js";
+import { MainButton } from "../MainButton/MainButton.js";
 import { CheckIcon, rem } from "@mantine/core";
 
 export default function SettingPage() {
@@ -18,18 +18,15 @@ export default function SettingPage() {
     setColorStatus,
     roomId,
     handlers,
-    // eslint-disable-next-line no-unused-vars
     config,
     setConfig,
   } = useContext(AppContext);
 
   const [checkedColor, setCheckedColor] = useState(null);
   const [isReady, setIsReady] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [isReadyFail, setIsReadyFail] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [isSuccess2, setSuccess2] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [isUpdateResponse, setUpdateResponse] = useState(false);
 
   const playerReady = () => {
@@ -72,9 +69,8 @@ export default function SettingPage() {
 
   const updateConfigLevel1 = () => {
     const Config1 = {
-      //  boardSize: 9,
       level: 1,
-      roundTime: 60,
+      roundTime: 240,
       breakTime: 0.0,
     };
     socket.emit("update-config", { roomId, config: Config1 }, (isSuccess) => {
@@ -86,10 +82,8 @@ export default function SettingPage() {
 
   const updateConfigLevel2 = () => {
     const Config2 = {
-      // boardSize: 9,
       level: 2,
-      // roundTime: 120,
-      roundTime: 36000,
+      roundTime: 360,
       breakTime: 1.0,
     };
     socket.emit("update-config", { roomId, config: Config2 }, (isSuccess) => {

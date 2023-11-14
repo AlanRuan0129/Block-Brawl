@@ -3,11 +3,12 @@ import useKeypress from "react-use-keypress";
 import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../GameContext";
+import { AppContext } from "../../GameContext";
 import { Modal } from "./Model";
 import { convertToMS } from "./Timer";
 import { ProgressBar } from "./ProgressBar";
 import { RankingList } from "./RankingList";
+
 import {
   changeDirection,
   breakSetBlock,
@@ -15,7 +16,7 @@ import {
   playerMove,
 } from "./Control";
 
-import socket from "../Socket";
+import socket from "../../Socket";
 
 function GamePage() {
   const { roomId } = useContext(AppContext);
@@ -62,9 +63,7 @@ function GamePage() {
     await new Promise((resolve) =>
       setTimeout(resolve, config.breakTime * 1000)
     );
-    // board[row][col] = 0;
-    // 切换冰的状态：如果已破则复原，如果未破则破坏
-    // board[row][col] = board[row][col] === 1 ? 0 : 1;
+
     if (board[row][col] === 1) {
       board[row][col] = 0;
     } else if (board[row][col] === 0) {
@@ -84,8 +83,7 @@ function GamePage() {
     await new Promise((resolve) =>
       setTimeout(resolve, config.breakTime * 1000)
     );
-    // board[row][col] = 0;
-    // 切换冰的状态：如果已破则复原，如果未破则破坏
+
     board[row][col] = 1;
     setBoard([...board]);
     socket.emit("breakonly", { roomId, y: col, x: row });
@@ -111,37 +109,27 @@ function GamePage() {
     const keyName = event.key;
 
     if (me.isAlive && !done) {
-      // what every move or not, direction need to change
       if (me.isBreaker && !isBreaking) {
         changeDirection(me, keyName);
         if (keyName === " ") {
-          // Space is typically denoted by " " in event.key
-          // handle break ice using space
-
           breakSetBlock(me, board, handleBreak);
         } else {
           playerMove(keyName, me, board.length, board);
-          //  playerMove(keyName, me, board.length, setBoard, board);
         }
       } else if (!me.isBreaker) {
         changeDirection(me, keyName);
-        // normal non-breaker players on the ice
 
         if (keyName === " ") {
           breakSetBlock(me, board, handleSetBreak);
         } else {
           playerMove(keyName, me, board.length, board);
-          //playerMove(keyName, me, board.length, setBoard, board);
-          // 现在检查移动后的新位置
+
           const newValue = board[me.x][me.y];
 
-          // 如果玩家移动到的位置的值是 4
           if (newValue === 4) {
-            // 则更新 board 状态
             setBoard((prevBoard) => {
-              // 创建 board 状态的深拷贝
               const newBoard = prevBoard.map((row) => [...row]);
-              // 将位置的值从 4 改为 5
+
               newBoard[me.x][me.y] = 1;
               return newBoard;
             });
@@ -159,7 +147,7 @@ function GamePage() {
         y: me.y,
         direction: me.direction,
       });
-      // You may need to use a functional update if `me` is a state variable
+
       setMe((prevMe) => ({ ...prevMe }));
     }
   };
@@ -170,7 +158,6 @@ function GamePage() {
   );
 
   useEffect(() => {
-    // @ts-ignore
     if (!!state.game) initGame(state.game, socket.id);
 
     const onGameUpdate = (game) => initGame(game, socket.id);
@@ -180,7 +167,7 @@ function GamePage() {
       });
 
       setLeaders(room.players);
-      // Find 'me' in the room's player list and update its 'isAlive' status
+
       const meInRoom = room.players.find((player) => player.id === socket.id);
       if (meInRoom) {
         setMe((prevMe) => ({ ...prevMe, isAlive: meInRoom.isAlive }));
@@ -191,9 +178,9 @@ function GamePage() {
         room.players.filter((player) => player.isAlive && !player.isBreaker)
           .length === 0
       ) {
-        setWinner("The Monster Wins !!!");
+        setWinner("🎉 Predator Wins !!!");
       } else {
-        setWinner("Babo Win !!!");
+        setWinner("🎉 Survivor Wins !!!");
       }
       //Open Modal window
       setShow(true);
@@ -218,11 +205,9 @@ function GamePage() {
       socket.off("game-end", onGameEnd);
       socket.off("game-time-changed", onGameTimeChanged);
     };
-    // @ts-ignore
   }, [navigate, roomId, state.game]);
 
   const renderIceType1 = (iceSize, row, col, players) => {
-    // ...渲染ice为1的逻辑
     return (
       <div
         style={{
@@ -242,7 +227,6 @@ function GamePage() {
   };
 
   const renderIceType0 = (iceSize, row, col, players) => {
-    // ...渲染ice为0的逻辑
     return (
       <div
         style={{
@@ -262,7 +246,6 @@ function GamePage() {
   };
 
   const renderIceType3 = (iceSize, row, col, players) => {
-    // ...渲染ice为0的逻辑
     return (
       <div
         style={{
@@ -282,7 +265,6 @@ function GamePage() {
   };
 
   const renderIceType4 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -302,7 +284,6 @@ function GamePage() {
   };
 
   const renderIceType5 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -322,7 +303,6 @@ function GamePage() {
   };
 
   const renderIceType6 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -341,7 +321,6 @@ function GamePage() {
     );
   };
   const renderIceType7 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -360,7 +339,6 @@ function GamePage() {
     );
   };
   const renderIceType8 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -379,7 +357,6 @@ function GamePage() {
     );
   };
   const renderIceType9 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -399,7 +376,6 @@ function GamePage() {
   };
 
   const renderIceType11 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -418,7 +394,6 @@ function GamePage() {
     );
   };
   const renderIceType12 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -437,7 +412,6 @@ function GamePage() {
     );
   };
   const renderIceType13 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -456,7 +430,6 @@ function GamePage() {
     );
   };
 
-  // 创建映射表
   const iceRenderers = {
     0: renderIceType0,
     1: renderIceType1,
@@ -476,17 +449,15 @@ function GamePage() {
     <div className="overflow-hidden">
       <div className="flex flex-col h-screen overflow-y-auto bg-room bg-center bg-cover font-bold text-pink-300">
         <div className="relative flex text-2xl item-center justify-center">
-          {
-            me.isAlive ? (
-              <div className="w-[4.5rem] h-[4.5rem]">
-                <img src="/assets/heart.png" alt="Alive"/>
-              </div>
-            ) : (
-              <div className="w-[3rem] h-[3rem] mt-1 mb-1">
-                <img src="/assets/die.png" alt="Die"/>
-              </div>
-            ) /* top right symbol for indicate the player out, which is "spectating"  justify-end right-5 */
-          }
+          {me.isAlive ? (
+            <div className="w-[4.5rem] h-[4.5rem]">
+              <img src="/assets/heart.png" alt="Alive" />
+            </div>
+          ) : (
+            <div className="w-[3rem] h-[3rem] mt-1 mb-1">
+              <img src="/assets/die.png" alt="Die" />
+            </div>
+          )}
           {!me.isAlive && (
             <div className="absolute flex flex-row justify-center p-[7.5rem]">
               <div className="">Spectating</div>
@@ -495,7 +466,6 @@ function GamePage() {
         </div>
 
         <div>
-          {/* Modal window for the leaderboard when game ends */}
           <Modal
             title={<div>{winningMessage}</div>}
             show={show}
@@ -503,10 +473,25 @@ function GamePage() {
               navigate("/homepage");
             }}
             mainPrompt={<RankingList list={leaderboardList} myID={me.id} />}
-            buttonPrompt={"Back to Room"}
+            buttonPrompt={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="3"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                />
+              </svg>
+            }
           />
 
-          <div>
+          <div className="flex item-center justify-center">
             <ProgressBar currentTime={currentTime} maxTime={config.roundTime} />
           </div>
           <div className="flex text-2xl item-center justify-center mt-2 mb-10">
@@ -515,20 +500,19 @@ function GamePage() {
 
           <div>
             <div className="flex item-center justify-center">
-            {/* Dead indicator, overlaying string */}
-            {!me.isAlive && showOut && (
-              <div className="absolute z-40 flex flex-row animate-bounce">
-                <div
-                  style={{
-                    fontSize: 100,
-                  }}
-                  className="text-custom-text-pink text-9xl"
-                  onClick={() => setShowOut(false)}
-                >
-                  You're die!
+              {!me.isAlive && showOut && (
+                <div className="absolute z-40 flex flex-row animate-bounce">
+                  <div
+                    style={{
+                      fontSize: 100,
+                    }}
+                    className="text-custom-text-pink text-9xl"
+                    onClick={() => setShowOut(false)}
+                  >
+                    You're die!
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             </div>
 
             <div className="">
@@ -540,7 +524,6 @@ function GamePage() {
                         key={row}
                       >
                         {rowItems.map((ice, col) => {
-                          // 调用映射表中的渲染函数
                           const renderFunc = iceRenderers[ice];
                           return renderFunc
                             ? renderFunc(iceSize, row, col, players)
@@ -562,7 +545,7 @@ export default GamePage;
 
 // Get imgae path based on players' chosen colors and direction
 function getIcon(props, colors) {
-  const myColor = colors[props.player.colorId ?? 0]; //Obtain each player's color from the color list
+  const myColor = colors[props.player.colorId ?? 0];
   var direction = props.player.direction;
 
   if (props.player.direction === "LEFT") {

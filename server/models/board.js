@@ -41,9 +41,6 @@ export class Board {
   }
 
   break(x, y) {
-    // Toggle the state of the ice block: if it's intact (1), break it (set to 0);
-    // if it's already broken (0), repair it (set back to 1).
-    // this.board[x][y] = this.board[x][y] === 1 ? 0 : 1;
     if (this.board[x][y] === 1) {
       this.board[x][y] = 0;
     } else if (this.board[x][y] === 0) {

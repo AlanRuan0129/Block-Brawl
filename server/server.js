@@ -40,7 +40,6 @@ initSocketServer(httpServer);
 const io = getSocketIO();
 
 io.on("connection", (socket) => {
-  console.log("A user connected", socket.id);
   CreateRoomOn(socket);
   JoinRoomOn(socket);
   PlayerReadyOn(socket);

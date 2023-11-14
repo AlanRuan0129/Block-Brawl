@@ -31,7 +31,6 @@ function CreateRoom({ closeModal }) {
       setName(name);
       setColors(room.colors);
       setColorStatus(room.colorStatus);
-      // navigate("/" + room.roomId.toString() + "/roompage");
       alert(`Room ${room.roomId} Created!`);
       navigate("/Layout/setting");
     });

@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { AppContext } from "../GameContext";
+import { AppContext } from "../../GameContext";
 import { Outlet } from "react-router-dom";
-import socket from "../Socket";
+import socket from "../../Socket";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { FcLock, FcLikePlaceholder, FcOk } from "react-icons/fc";
-import PixelMusic from "./PixelMusic";
+import PixelMusic from "./Music/PixelMusic";
 
 import "./Messages.css";
 import "./Message.css";
@@ -17,25 +17,9 @@ export default function Layout() {
   }
 
   return (
-    // <div>
-    //   {/* <div>
-    //     <Outlet />
-    //   </div> */}
-
-    //   <div>
-    //     <PlayerList />
-    //     <PixelMusic autoPlay={false} />
-    //     <MessageList />
-    //   </div>
-    // </div>
-
     <div className="flex flex-col h-screen">
       {" "}
-      {/* 设置为 flex 容器并填充整个视口高度 */}
-      {/* 其他组件 */}
       <PlayerList />
-      {/* <PixelMusic autoPlay={false} /> */}
-      {/* MessageList 组件将填充剩余空间并可滚动 */}
       <div className="flex-grow overflow-hidden">
         <MessageList />
       </div>
@@ -78,7 +62,6 @@ function PlayerList() {
 }
 
 function PlayerItem({ color, selfName, playerName, isReady }) {
-  // Use Tailwind CSS for the avatar image based on isBreaker state
   const avatarSrc = process.env.PUBLIC_URL + "/assets/p_down_ffd11a.png";
 
   return (
@@ -91,7 +74,7 @@ function PlayerItem({ color, selfName, playerName, isReady }) {
         }`}
         style={{ backgroundColor: color || "white" }}
       />
-      {/* Player name text */}
+
       <p
         className={`text-lg font-semibold ${
           playerName === selfName ? "text-blue-500" : "text-white"
@@ -175,7 +158,7 @@ function MessageList() {
   const handleSendMessage = () => {
     if (inputRef.current) {
       sendMessage(inputRef.current.value);
-      inputRef.current.value = ""; // Clear the input field
+      inputRef.current.value = "";
     }
   };
 

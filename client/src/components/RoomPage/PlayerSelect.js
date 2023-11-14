@@ -20,7 +20,7 @@ export function PlayerSelect(props) {
           radius="lg"
           onClick={() => {
             props.handleClick(index);
-            console.log(index);
+           
            
           }}
           style={{ color: "#000000", marginTop: "1rem" }}
