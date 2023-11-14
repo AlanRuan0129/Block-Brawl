@@ -247,7 +247,7 @@ export default function SettingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center mt-16  space-y-6">
+        <div className="flex flex-col flex-end h-[20rem] space-y-20 justify-center items-center">
           <div className="flex flex-row items-center justify-center">
             <MainButton
               handleClick={isReady ? playerUnReady : playerReady}
