@@ -5,7 +5,7 @@ import { HostSelect } from "./HostSelect.js";
 import { AppContext } from "../../GameContext.js";
 import socket from "../../Socket.js";
 import { MainButton } from "../MainButton/MainButton.js";
-import { CheckIcon, rem } from "@mantine/core";
+import { CheckIcon } from "@mantine/core";
 import PixelMusic from "./Music/PixelMusic.js";
 
 export default function SettingPage() {
@@ -19,16 +19,14 @@ export default function SettingPage() {
     setColorStatus,
     roomId,
     handlers,
-    config,
     setConfig,
   } = useContext(AppContext);
 
   const [checkedColor, setCheckedColor] = useState(null);
   const [isReady, setIsReady] = useState(false);
-  const [isReadyFail, setIsReadyFail] = useState(false);
+
   const [isSuccess, setSuccess] = useState(false);
   const [isSuccess2, setSuccess2] = useState(false);
-  const [isUpdateResponse, setUpdateResponse] = useState(false);
 
   const playerReady = () => {
     socket.emit(
@@ -38,9 +36,6 @@ export default function SettingPage() {
       (isReady) => {
         if (isReady) {
           setIsReady(true);
-          setIsReadyFail(false);
-        } else {
-          setIsReadyFail(true);
         }
       }
     );
@@ -75,7 +70,6 @@ export default function SettingPage() {
       breakTime: 0.0,
     };
     socket.emit("update-config", { roomId, config: Config1 }, (isSuccess) => {
-      setUpdateResponse(true);
       setSuccess(isSuccess);
       setSuccess2(false);
     });
@@ -88,7 +82,6 @@ export default function SettingPage() {
       breakTime: 1.0,
     };
     socket.emit("update-config", { roomId, config: Config2 }, (isSuccess) => {
-      setUpdateResponse(true);
       setSuccess2(isSuccess);
       setSuccess(false);
     });
@@ -122,6 +115,7 @@ export default function SettingPage() {
     return () => {
       socket.off("game-update", startGame);
     };
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -254,7 +248,7 @@ export default function SettingPage() {
           </div>
         )}
 
-        <div className="flex flex-col flex-end h-[9rem] mt-[2rem] space-y-6 justify-center items-center">
+        <div className="flex flex-col lg:h-[12rem] h-[9rem] mt-[2rem] space-y-6 justify-end items-center">
           <div className="flex flex-row items-center justify-center">
             <MainButton
               handleClick={isReady ? playerUnReady : playerReady}

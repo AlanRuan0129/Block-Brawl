@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../../GameContext";
 import socket from "../../Socket";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { FcLock, FcLikePlaceholder, FcOk } from "react-icons/fc";
+import { FcLock, FcOk } from "react-icons/fc";
 import { IoIosSend } from "react-icons/io";
 
 import "./Messages.css";
@@ -38,6 +38,7 @@ function PlayerList() {
     return () => {
       socket.off("game-update", updateGame);
     };
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -183,6 +184,7 @@ function MessageList() {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       <ScrollToBottom className="messages">
+        {/* eslint-disable-next-line */}
         {messageList.map((m, index) => {
           if (m.type === "chat") {
             const playerName = m.name;

@@ -206,6 +206,7 @@ function GamePage() {
       socket.off("game-end", onGameEnd);
       socket.off("game-time-changed", onGameTimeChanged);
     };
+    // eslint-disable-next-line
   }, [navigate, roomId, state.game]);
 
   const renderIceType1 = (iceSize, row, col, players) => {
