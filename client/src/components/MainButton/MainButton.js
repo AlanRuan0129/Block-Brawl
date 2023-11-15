@@ -3,7 +3,7 @@ export function MainButton(props) {
     <div className="flex items-center justify-center">
       <button
         onClick={props.handleClick}
-        className="absolute z-40 px-6 py-3 text-xl bg-game-pink font-semibold text-white rounded-lg shadow-inner active:mt-2"
+        className="px-5 py-3 text-lg bg-game-pink font-semibold text-[1.5rem] text-white hover:bg-pink-400 focus:outline-none rounded-[0.5rem]"
       >
         {props.text}
       </button>

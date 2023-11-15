@@ -43,31 +43,26 @@ export class Room {
     return this.players.get(id);
   }
 
-  
-
   initPlayerPosition() {
-      let i = 0;
-      this.players.forEach((player, id) => {
-        if(player.isBreaker){
-          player.x = 1;
-          player.y = 1;
-
-        }else{
+    let i = 0;
+    this.players.forEach((player, id) => {
+      if (player.isBreaker) {
+        player.x = 1;
+        player.y = 1;
+      } else {
         player.x = 5;
-        player.y = 5;
+        player.y = 5 + 2 * i;
         i++;
-        }
-      });
-    }
-
+      }
+    });
+  }
 
   initTimer(onFinished, onTimerProceeded) {
     if (this.timer) {
-      
       clearInterval(this.timer);
     }
     if (this.config) {
-      this.currentGameTime = this.config.roundTime; 
+      this.currentGameTime = this.config.roundTime;
     }
     const countDown = () => {
       onTimerProceeded(this.currentGameTime);
@@ -100,7 +95,6 @@ export class Room {
     const player = this.getPlayer(playerId);
     const host = this.getPlayer(this.hostId); // host is the breaker
 
-    
     if (player && player.isAlive && !player.isBreaker) {
       if (
         !this.board.check(player.x, player.y) ||

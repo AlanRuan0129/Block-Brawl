@@ -1,15 +1,14 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../../GameContext";
-import { Outlet } from "react-router-dom";
 import socket from "../../Socket";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { FcLock, FcLikePlaceholder, FcOk } from "react-icons/fc";
-import PixelMusic from "./Music/PixelMusic";
+import { IoIosSend } from "react-icons/io";
 
 import "./Messages.css";
 import "./Message.css";
 
-export default function Layout() {
+export default function ChatRoom() {
   const { roomId } = useContext(AppContext);
 
   if (!roomId) {
@@ -42,9 +41,10 @@ function PlayerList() {
   }, []);
 
   return (
-    <div className="bg-gray-800 p-4 text-white">
-      <p className="text-lg pb-2">Players ({players.length})</p>
-      <div className="overflow-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 h-40">
+    <div className="bg-slate-900 text-cyan-400">
+      <p className="text-lg text-center font-bold pt-3 pb-2">Let's Chat</p>
+
+      <div className="overflow-none bg-slate-900 h-[12.5rem]">
         {players.map((p, index) => (
           <PlayerItem
             key={index}
@@ -52,7 +52,7 @@ function PlayerList() {
             selfName={name}
             playerName={p.name}
             isHost={p.id === hostId}
-            isBreaker={p.isBreaker}
+            // isBreaker={p.isBreaker}
             isReady={p.isReady}
           />
         ))}
@@ -61,45 +61,63 @@ function PlayerList() {
   );
 }
 
-function PlayerItem({ color, selfName, playerName, isReady }) {
-  const avatarSrc = process.env.PUBLIC_URL + "/assets/p_down_ffd11a.png";
+function PlayerItem({ color, selfName, playerName, isReady, isHost }) {
+  const avatarSrc = process.env.PUBLIC_URL + "/assets/wait.png";
 
   return (
-    <div className="flex items-center space-x-2 mb-2">
-      <img
-        src={avatarSrc}
-        alt="item"
-        className={`w-10 h-10 rounded-full ${
-          color ? "bg-[color]" : "bg-white"
-        }`}
-        style={{ backgroundColor: color || "white" }}
-      />
+    <div className="flex flex-col pb-2 px-[0.5rem]">
+      <div className="flex items-center space-x-2 mb-2 p-2 border-[0.1rem] rounded-[1rem] border-cyan-400">
+        <img
+          src={
+            color
+              ? process.env.PUBLIC_URL +
+                "../assets/p_" +
+                "down" +
+                "_" +
+                color.toString().substring(1) +
+                ".png"
+              : avatarSrc
+          }
+          alt="item"
+          className="w-[2rem] h-[2rem] rounded-full object-contain bg-pic-blue"
+        />
 
-      <p
-        className={`text-lg font-semibold ${
-          playerName === selfName ? "text-blue-500" : "text-white"
-        }`}
-      >
-        {playerName === selfName ? (
-          <div class="flex items-center">
-            {playerName}
-            <FcLikePlaceholder />
+        <div className="flex flex-row space-x-2 justify-between w-full">
+          <div>
+            <p
+              className={`text-lg font-semibold ${
+                playerName === "text-cyan-500"
+              }`}
+            >
+              {playerName === selfName ? (
+                <div className="flex items-center">
+                  {playerName}
+                  <img
+                    src="/assets/location.png"
+                    alt="Me"
+                    className="h-[1.4rem] w-[1.4rem] ml-[0.3rem]"
+                  />
+                </div>
+              ) : (
+                playerName
+              )}
+            </p>
           </div>
-        ) : (
-          playerName
-        )}
-      </p>
-      {isReady ? (
-        <>
-          <FcOk />
-          Ready...
-        </>
-      ) : (
-        <>
-          <FcLock />
-          Waiting for the player to be ready...
-        </>
-      )}
+          <div className="flex flex-row space-x-2 items-center justify-center">
+            {isReady ? (
+              <>
+                <FcOk />
+                <span>Ready</span>
+              </>
+            ) : (
+              <>
+                <FcLock />
+                <span>Waiting</span>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -186,18 +204,18 @@ function MessageList() {
         })}
       </ScrollToBottom>
 
-      <div className="p-4 flex">
+      <div className="p-4 flex  bg-indigo-950">
         <input
           ref={inputRef}
-          className="w-full rounded p-2 mr-2 border border-pink-200 focus:outline-none focus:ring focus:ring-pink-300"
+          className="w-full rounded-[1rem] p-2 mr-2 border-[0.1rem] border-pink-200 focus:outline-none focus:ring focus:ring-pink-300"
           placeholder="Type a message..."
           onKeyDown={handleKeyDown}
         />
         <button
           onClick={handleSendMessage}
-          className="bg-pink-300 text-white hover:bg-pink-400 focus:outline-none rounded px-4 py-2"
+          className="bg-pink-300 text-[1.5rem] text-white hover:bg-pink-400 focus:outline-none rounded-[0.8rem] px-5 py-3"
         >
-          Send
+          <IoIosSend />
         </button>
       </div>
     </div>

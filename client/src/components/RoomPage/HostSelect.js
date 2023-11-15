@@ -3,7 +3,7 @@ import { ColorSwatch, CheckIcon } from "@mantine/core";
 export function HostSelect(props) {
   const swatches = props.colorStrings.slice(4)?.map((color, index) => (
     <div className="w-1/10 p-6" key={`avatar-${index}`}>
-      <div className="w-40 h-40 flex bg-pic-blue rounded-full justify-center items-center overflow-hidden">
+      <div className="w-[9rem] h-[9rem] flex bg-pic-blue rounded-full justify-center items-center overflow-hidden">
         <img
           src={process.env.PUBLIC_URL + `/assets/avatar${index + 5}.png`}
           alt={`Avatar ${index + 5}`}
@@ -28,7 +28,7 @@ export function HostSelect(props) {
           {index + 4 === props.colorChecked &&
             !props.colorStatus[index + 4] &&
             !props.isReady && (
-              <CheckIcon style={{ width: "1.5rem", height: "1.5rem" }} />
+              <CheckIcon style={{ width: "1rem", height: "1rem" }} />
             )}
         </ColorSwatch>
       </div>

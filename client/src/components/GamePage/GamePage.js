@@ -8,6 +8,7 @@ import { Modal } from "./Model";
 import { convertToMS } from "./Timer";
 import { ProgressBar } from "./ProgressBar";
 import { RankingList } from "./RankingList";
+import PixelMusic from "../RoomPage/Music/PixelMusic";
 
 import {
   changeDirection,
@@ -272,7 +273,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat  bg-center player bg-floor_bean bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-center player bg-floor_bean bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -291,7 +292,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-block_bean bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-block_bean bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -310,7 +311,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall bg-block_bg_color"
+        className="flex items-center justify-center m-2  bg-no-repeat bg-cover bg-center player bg-wall bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -328,7 +329,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-roof_red bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-roof_red bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -346,7 +347,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-roof_blue bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-roof_blue bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -364,7 +365,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-stall bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-stall bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -383,7 +384,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall_left bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-wall_left bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -401,7 +402,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall_right bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-wall_right bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -419,7 +420,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-coverc bg-center player bg-wall_water bg-block_bg_color"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-wall_water bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -440,6 +441,7 @@ function GamePage() {
     7: renderIceType7,
     8: renderIceType8,
     9: renderIceType9,
+
     11: renderIceType11,
     12: renderIceType12,
     13: renderIceType13,
@@ -447,20 +449,15 @@ function GamePage() {
 
   return (
     <div className="overflow-hidden">
-      <div className="flex flex-col h-screen overflow-y-auto bg-room bg-center bg-cover font-bold text-pink-300">
-        <div className="relative flex text-2xl item-center justify-center">
+      <div className="flex flex-col h-screen bg-room bg-center bg-cover font-bold text-pink-300">
+        <div className="relative flex items-center justify-center">
           {me.isAlive ? (
-            <div className="w-[4.5rem] h-[4.5rem]">
+            <div className="w-[3rem] h-[3rem]">
               <img src="/assets/heart.png" alt="Alive" />
             </div>
           ) : (
             <div className="w-[3rem] h-[3rem] mt-1 mb-1">
               <img src="/assets/die.png" alt="Die" />
-            </div>
-          )}
-          {!me.isAlive && (
-            <div className="absolute flex flex-row justify-center p-[7.5rem]">
-              <div className="">Spectating</div>
             </div>
           )}
         </div>
@@ -491,15 +488,18 @@ function GamePage() {
             }
           />
 
-          <div className="flex item-center justify-center">
+          <div className="flex relative items-center justify-center">
             <ProgressBar currentTime={currentTime} maxTime={config.roundTime} />
+            <div className="absolute right-[2rem]">
+              <PixelMusic autoPlay={true} />
+            </div>
           </div>
-          <div className="flex text-2xl item-center justify-center mt-2 mb-10">
+          <div className="flex text-xl items-center justify-center mt-[1rem] mb-[1rem]">
             {convertToMS(currentTime)}
           </div>
 
           <div>
-            <div className="flex item-center justify-center">
+            <div className="flex items-center justify-center">
               {!me.isAlive && showOut && (
                 <div className="absolute z-40 flex flex-row animate-bounce">
                   <div
@@ -520,7 +520,7 @@ function GamePage() {
                 ? board.map((rowItems, row) => {
                     return (
                       <div
-                        className="flex flex-row item-center justify-center"
+                        className="flex flex-row items-center justify-center"
                         key={row}
                       >
                         {rowItems.map((ice, col) => {

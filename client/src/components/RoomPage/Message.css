@@ -1,10 +1,11 @@
 .messageBox {
-  background: #f3f3f3;
-  border-radius: 20px;
-  padding: 5px 20px;
+  background: #374151;
+  border-radius: 15px;
+  padding: 7px 20px;
   color: white;
   display: inline-block;
   max-width: 80%;
+  margin-bottom: 10px;
 }
 
 .messageText {
@@ -55,13 +56,15 @@
 }
 
 .colorDark {
-  color: #353535;
+  /* color: #353535; */
+  color: white;
 }
 
 .backgroundBlue {
-  background: #2979ff;
+  background: #f9a8d4;
 }
 
 .backgroundLight {
-  background: #f3f3f3;
+  /* background: #f3f3f3; */
+  background: #06b6d4;
 }

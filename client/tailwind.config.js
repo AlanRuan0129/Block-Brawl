@@ -9,9 +9,8 @@ module.exports = {
         "power-font": "#fdf0a2",
         "pic-blue": "#4d7bb0",
         "pic-pink": "#ea90ad",
-        "block_bg_color": "#b2dff3",
+        block_bg_color: "#b2dff3",
         "game-pink": "#edacd2",
-        
       },
       textColor: {
         "custom-pink": "#e560e0",
@@ -25,9 +24,9 @@ module.exports = {
         floor: "url('../public/assets/floor.png')",
         floor_bean: "url('../public/assets/floor_bean.gif')",
         block_bean: "url('../public/assets/block_bean.png')",
-        block:"url('../public/assets/block.png')",
-        wall:"url('../public/assets/wall.png')",
-        stall:"url('../public/assets/stall.png')",
+        block: "url('../public/assets/block.png')",
+        wall: "url('../public/assets/wall.png')",
+        stall: "url('../public/assets/stall.png')",
         fire: "url('../public/assets/fire.gif')",
         wall_left: "url('../public/assets/wall_left.png')",
         wall_right: "url('../public/assets/wall_right.png')",
@@ -36,16 +35,12 @@ module.exports = {
         roof_blue: "url('../public/assets/roofBlue.png')",
         win: "url('../public/assets/win.gif')",
       },
-      fontFamily: {
-        "league-spartan": ["League Spartan", "sans-serif"],
-        "nanum-pen": ["Nanum Pen Script", "sans"],
-        "luckiest": ["Luckiest Guy", "sans"],
-      },
+
       minWidth: {
         "80rem": "80rem",
       },
       boxShadow: {
-        '3d': 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;',
+        "3d": "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;",
       },
     },
   },

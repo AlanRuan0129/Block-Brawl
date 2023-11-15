@@ -2,8 +2,8 @@ import { ColorSwatch, CheckIcon } from "@mantine/core";
 
 export function PlayerSelect(props) {
   const swatches = props.colorStrings.slice(0, 4)?.map((color, index) => (
-    <div className="w-1/4 p-2" key={`avatar-${index}`}>
-      <div className="w-40 h-40 flex justify-center items-center overflow-hidden">
+    <div className="w-1/4 p-5" key={`avatar-${index}`}>
+      <div className="w-[9rem] h-[9rem] flex justify-center items-center overflow-hidden">
         <img
           src={process.env.PUBLIC_URL + `/assets/avatar${index + 1}.png`}
           alt={`Avatar ${index + 1}`}
@@ -20,8 +20,6 @@ export function PlayerSelect(props) {
           radius="lg"
           onClick={() => {
             props.handleClick(index);
-           
-           
           }}
           style={{ color: "#000000", marginTop: "1rem" }}
         >

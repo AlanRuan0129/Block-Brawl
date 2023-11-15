@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Nanum Pen Script";
+  src: url("/public/fonts/NanumPenScript-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.mt {
+  margin-top: 9rem;
+}
+
+.text-custom-pink {
+  color: #f472b6;
+}
+
+.font-nanum-pen {
+  font-family: "Nanum Pen Script", sans-serif; /* Fallback font is optional */
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.text {
+  font-size: 10rem;
+}
+
+.leading {
+  line-height: 54px;
+}

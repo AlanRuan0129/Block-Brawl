@@ -3,10 +3,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./components/HomePage/HomePage";
 import Signup from "./components/Signup/index";
 import Login from "./components/Login/index";
-import Layout from "./components/RoomPage/Layout";
-import SettingPage from "./components/RoomPage/SettingPage";
 import GamePage from "./components/GamePage/GamePage";
-import ParentComponent from "./components/RoomPage/Textwillmove";
+import ParentComponent from "./components/RoomPage/ParentComponent";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -17,7 +15,7 @@ function App() {
       <Route path="/signup" exact element={<Signup />} />
       <Route path="/login" exact element={<Login />} />
 
-      <Route path="/Layout/setting" element={<ParentComponent />} />
+      <Route path="/setting" element={<ParentComponent />} />
 
       <Route path="game" element={<GamePage />} />
 

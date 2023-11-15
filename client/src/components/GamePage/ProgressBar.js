@@ -19,7 +19,7 @@ const ProgressBar = ({ currentTime, maxTime }) => {
       {" "}
       {/* Container for the progress bar */}
       <div
-        className={`h-5 ${progressBarColor} rounded-lg transition-all ease-linear`}
+        className={`h-[2rem] ${progressBarColor} rounded-lg transition-all ease-linear`}
         style={{ width: `${widthPercentage}%` }} // The actual progress bar
       />
     </div>
