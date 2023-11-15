@@ -12,7 +12,6 @@ export class Room {
 
     this.config = {
       roomSize: 3,
-      // boardSize: 9,
       level: 1,
       roundTime: 60,
       breakTime: 0.0,
@@ -24,8 +23,9 @@ export class Room {
       "#81a9db",
       "#ffd11a",
       "#f19cb7",
-      "#ffd11a",
-      "#f19cb7",
+      "#f3f3f3",
+      "#646464",
+      "#c3a035",
     ];
 
     this.colorStatus = [null, null, null, null, null, null, null, null, null];
@@ -46,19 +46,23 @@ export class Room {
   initPlayerPosition() {
     let i = 0;
     this.players.forEach((player, id) => {
-      player.x = 0;
-      player.y = i;
-      i++;
+      if (player.isBreaker) {
+        player.x = 1;
+        player.y = 1;
+      } else {
+        player.x = 5;
+        player.y = 5 + 2 * i;
+        i++;
+      }
     });
   }
 
   initTimer(onFinished, onTimerProceeded) {
     if (this.timer) {
-      // ensure the previous timer is cleared before creating a new one
       clearInterval(this.timer);
     }
     if (this.config) {
-      this.currentGameTime = this.config.roundTime; //seconds, and currently we allow the user to move within 20 seconds
+      this.currentGameTime = this.config.roundTime;
     }
     const countDown = () => {
       onTimerProceeded(this.currentGameTime);
@@ -91,7 +95,6 @@ export class Room {
     const player = this.getPlayer(playerId);
     const host = this.getPlayer(this.hostId); // host is the breaker
 
-    // Check the moving non-breaker player
     if (player && player.isAlive && !player.isBreaker) {
       if (
         !this.board.check(player.x, player.y) ||

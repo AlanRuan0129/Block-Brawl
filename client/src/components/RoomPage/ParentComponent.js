@@ -1,5 +1,5 @@
 import SettingPage from "./SettingPage";
-import Layout from "./Layout";
+import ChatRoom from "./ChatRoom";
 
 function ParentComponent() {
   return (
@@ -8,7 +8,7 @@ function ParentComponent() {
         <SettingPage />
       </div>
       <div className="w-1/4 overflow-y-auto">
-        <Layout />
+        <ChatRoom />
       </div>
     </div>
   );

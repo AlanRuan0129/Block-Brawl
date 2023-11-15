@@ -1,9 +1,9 @@
 import { ColorSwatch, CheckIcon } from "@mantine/core";
 
-export function HostSelect(props) {
-  const swatches = props.colorStrings.slice(4)?.map((color, index) => (
-    <div className="w-1/2 p-6" key={`avatar-${index}`}>
-      <div className="w-40 h-40 flex justify-center items-center overflow-hidden">
+export function PlayerSelect(props) {
+  const swatches = props.colorStrings.slice(0, 4)?.map((color, index) => (
+    <div className="w-1/4 p-5" key={`avatar-${index}`}>
+      <div className="w-[9rem] h-[9rem] flex justify-center items-center overflow-hidden">
         <img
           src={process.env.PUBLIC_URL + `/assets/avatar${index + 1}.png`}
           alt={`Avatar ${index + 1}`}
@@ -18,7 +18,9 @@ export function HostSelect(props) {
           component="button"
           disabled={props.colorStatus[index] || props.isReady}
           radius="lg"
-          onClick={() => props.handleClick(index)}
+          onClick={() => {
+            props.handleClick(index);
+          }}
           style={{ color: "#000000", marginTop: "1rem" }}
         >
           {index === props.colorChecked &&

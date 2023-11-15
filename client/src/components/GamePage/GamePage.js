@@ -3,11 +3,13 @@ import useKeypress from "react-use-keypress";
 import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../GameContext";
+import { AppContext } from "../../GameContext";
 import { Modal } from "./Model";
 import { convertToMS } from "./Timer";
 import { ProgressBar } from "./ProgressBar";
 import { RankingList } from "./RankingList";
+import PixelMusic from "../RoomPage/Music/PixelMusic";
+
 import {
   changeDirection,
   breakSetBlock,
@@ -15,7 +17,7 @@ import {
   playerMove,
 } from "./Control";
 
-import socket from "../Socket";
+import socket from "../../Socket";
 
 function GamePage() {
   const { roomId } = useContext(AppContext);
@@ -62,9 +64,7 @@ function GamePage() {
     await new Promise((resolve) =>
       setTimeout(resolve, config.breakTime * 1000)
     );
-    // board[row][col] = 0;
-    // 切换冰的状态：如果已破则复原，如果未破则破坏
-    // board[row][col] = board[row][col] === 1 ? 0 : 1;
+
     if (board[row][col] === 1) {
       board[row][col] = 0;
     } else if (board[row][col] === 0) {
@@ -84,8 +84,7 @@ function GamePage() {
     await new Promise((resolve) =>
       setTimeout(resolve, config.breakTime * 1000)
     );
-    // board[row][col] = 0;
-    // 切换冰的状态：如果已破则复原，如果未破则破坏
+
     board[row][col] = 1;
     setBoard([...board]);
     socket.emit("breakonly", { roomId, y: col, x: row });
@@ -111,37 +110,27 @@ function GamePage() {
     const keyName = event.key;
 
     if (me.isAlive && !done) {
-      // what every move or not, direction need to change
       if (me.isBreaker && !isBreaking) {
         changeDirection(me, keyName);
         if (keyName === " ") {
-          // Space is typically denoted by " " in event.key
-          // handle break ice using space
-
           breakSetBlock(me, board, handleBreak);
         } else {
           playerMove(keyName, me, board.length, board);
-          //  playerMove(keyName, me, board.length, setBoard, board);
         }
       } else if (!me.isBreaker) {
         changeDirection(me, keyName);
-        // normal non-breaker players on the ice
 
         if (keyName === " ") {
           breakSetBlock(me, board, handleSetBreak);
         } else {
           playerMove(keyName, me, board.length, board);
-          //playerMove(keyName, me, board.length, setBoard, board);
-          // 现在检查移动后的新位置
+
           const newValue = board[me.x][me.y];
 
-          // 如果玩家移动到的位置的值是 4
           if (newValue === 4) {
-            // 则更新 board 状态
             setBoard((prevBoard) => {
-              // 创建 board 状态的深拷贝
               const newBoard = prevBoard.map((row) => [...row]);
-              // 将位置的值从 4 改为 5
+
               newBoard[me.x][me.y] = 1;
               return newBoard;
             });
@@ -159,7 +148,7 @@ function GamePage() {
         y: me.y,
         direction: me.direction,
       });
-      // You may need to use a functional update if `me` is a state variable
+
       setMe((prevMe) => ({ ...prevMe }));
     }
   };
@@ -170,7 +159,6 @@ function GamePage() {
   );
 
   useEffect(() => {
-    // @ts-ignore
     if (!!state.game) initGame(state.game, socket.id);
 
     const onGameUpdate = (game) => initGame(game, socket.id);
@@ -180,7 +168,7 @@ function GamePage() {
       });
 
       setLeaders(room.players);
-      // Find 'me' in the room's player list and update its 'isAlive' status
+
       const meInRoom = room.players.find((player) => player.id === socket.id);
       if (meInRoom) {
         setMe((prevMe) => ({ ...prevMe, isAlive: meInRoom.isAlive }));
@@ -191,9 +179,9 @@ function GamePage() {
         room.players.filter((player) => player.isAlive && !player.isBreaker)
           .length === 0
       ) {
-        setWinner("The Monster Wins !!!");
+        setWinner("🎉 Predator Wins !!!");
       } else {
-        setWinner("babo Win !!!");
+        setWinner("🎉 Survivor Wins !!!");
       }
       //Open Modal window
       setShow(true);
@@ -218,11 +206,10 @@ function GamePage() {
       socket.off("game-end", onGameEnd);
       socket.off("game-time-changed", onGameTimeChanged);
     };
-    // @ts-ignore
+    // eslint-disable-next-line
   }, [navigate, roomId, state.game]);
 
   const renderIceType1 = (iceSize, row, col, players) => {
-    // ...渲染ice为1的逻辑
     return (
       <div
         style={{
@@ -230,7 +217,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center bg-no-repeat bg-center bg-cover shadow-md player bg-floor"
+        className="flex items-center justify-center bg-no-repeat bg-center bg-cover bg-center shadow-md player bg-floor"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col)) {
@@ -242,7 +229,6 @@ function GamePage() {
   };
 
   const renderIceType0 = (iceSize, row, col, players) => {
-    // ...渲染ice为0的逻辑
     return (
       <div
         style={{
@@ -250,7 +236,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_blue"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-block bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -262,7 +248,6 @@ function GamePage() {
   };
 
   const renderIceType3 = (iceSize, row, col, players) => {
-    // ...渲染ice为0的逻辑
     return (
       <div
         style={{
@@ -270,7 +255,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_purple"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player  bg-fire bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -282,7 +267,6 @@ function GamePage() {
   };
 
   const renderIceType4 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -290,7 +274,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_orange"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-center player bg-floor_bean bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -302,7 +286,6 @@ function GamePage() {
   };
 
   const renderIceType5 = (iceSize, row, col, players) => {
-    // for groundfood
     return (
       <div
         style={{
@@ -310,7 +293,7 @@ function GamePage() {
           height: Math.round(iceSize),
           margin: 0,
         }}
-        className="flex items-center justify-center m-2 bg-no-repeat bg-cover player bg-floor_red"
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-block_bean bg-block_bg_color"
       >
         {players.map((item, index) => {
           if (onThisIce(item, row, col) && item.isBreaker) {
@@ -321,80 +304,237 @@ function GamePage() {
     );
   };
 
-  // 创建映射表
+  const renderIceType6 = (iceSize, row, col, players) => {
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2  bg-no-repeat bg-cover bg-center player bg-wall bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType7 = (iceSize, row, col, players) => {
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-roof_red bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType8 = (iceSize, row, col, players) => {
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-roof_blue bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType9 = (iceSize, row, col, players) => {
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-stall bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+
+  const renderIceType11 = (iceSize, row, col, players) => {
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-wall_left bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType12 = (iceSize, row, col, players) => {
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-wall_right bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+  const renderIceType13 = (iceSize, row, col, players) => {
+    return (
+      <div
+        style={{
+          width: Math.round(iceSize),
+          height: Math.round(iceSize),
+          margin: 0,
+        }}
+        className="flex items-center justify-center m-2 bg-no-repeat bg-cover bg-center player bg-wall_water bg-block_bg_color"
+      >
+        {players.map((item, index) => {
+          if (onThisIce(item, row, col) && item.isBreaker) {
+            return <PlayerAvatar key={index} player={item} ice={iceSize} />;
+          } else return null;
+        })}
+      </div>
+    );
+  };
+
   const iceRenderers = {
     0: renderIceType0,
     1: renderIceType1,
     3: renderIceType3,
     4: renderIceType4,
     5: renderIceType5,
+    6: renderIceType6,
+    7: renderIceType7,
+    8: renderIceType8,
+    9: renderIceType9,
+
+    11: renderIceType11,
+    12: renderIceType12,
+    13: renderIceType13,
   };
 
   return (
-    <div>
-      {
-        me.isAlive ? (
-          <h1>alive</h1>
-        ) : (
-          <h1>dead</h1>
-        ) /* top right symbol for indicate the player out, which is "spectating" */
-      }
-      {!me.isAlive && (
-        <div className="absolute flex flex-col p-5 text-ice-3">
-          <div className="font-bold">Spectating</div>
-        </div>
-      )}
-
-      <div>
-        {/* Modal window for the leaderboard when game ends */}
-        <Modal
-          title={<div>{winningMessage}</div>}
-          show={show}
-          pageJump={() => {
-            navigate("/Layout/setting");
-          }}
-          mainPrompt={<RankingList list={leaderboardList} myID={me.id} />}
-          buttonPrompt={"Back to Room"}
-        />
-        <div>
-          <ProgressBar currentTime={currentTime} maxTime={config.roundTime} />
-        </div>
-        <div>{convertToMS(currentTime)}</div>
-
-        <div>
-          {/* Dead indicator, overlaying string */}
-          {!me.isAlive && showOut && (
-            <div className="absolute z-40 flex flex-row animate-bounce">
-              <div
-                style={{
-                  fontSize: 100,
-                  textShadow:
-                    "-2px 0 #041F32, 0 2px #FFFFFF, 2px 0 #041F32, 0 -2px #041F32",
-                }}
-                className="text-ice-5 text-9xl"
-                onClick={() => setShowOut(false)}
-              >
-                You're out!
-              </div>
+    <div className="overflow-hidden">
+      <div className="flex flex-col h-screen bg-room bg-center bg-cover font-bold text-pink-300">
+        <div className="relative flex items-center justify-center">
+          {me.isAlive ? (
+            <div className="w-[3rem] h-[3rem]">
+              <img src="/assets/heart.png" alt="Alive" />
+            </div>
+          ) : (
+            <div className="w-[3rem] h-[3rem] mt-1 mb-1">
+              <img src="/assets/die.png" alt="Die" />
             </div>
           )}
+        </div>
 
-          <div className="">
-            {board
-              ? board.map((rowItems, row) => {
-                  return (
-                    <div className="flex flex-row" key={row}>
-                      {rowItems.map((ice, col) => {
-                        // 调用映射表中的渲染函数
-                        const renderFunc = iceRenderers[ice];
-                        return renderFunc
-                          ? renderFunc(iceSize, row, col, players)
-                          : null;
-                      })}
-                    </div>
-                  );
-                })
-              : null}
+        <div>
+          <Modal
+            title={<div>{winningMessage}</div>}
+            show={show}
+            pageJump={() => {
+              navigate("/homepage");
+            }}
+            mainPrompt={<RankingList list={leaderboardList} myID={me.id} />}
+            buttonPrompt={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="3"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                />
+              </svg>
+            }
+          />
+
+          <div className="flex relative items-center justify-center">
+            <ProgressBar currentTime={currentTime} maxTime={config.roundTime} />
+            <div className="absolute right-[2rem]">
+              <PixelMusic autoPlay={true} />
+            </div>
+          </div>
+          <div className="flex text-xl items-center justify-center mt-[1rem] mb-[1rem]">
+            {convertToMS(currentTime)}
+          </div>
+
+          <div>
+            <div className="flex items-center justify-center">
+              {!me.isAlive && showOut && (
+                <div className="absolute z-40 flex flex-row animate-bounce">
+                  <div
+                    style={{
+                      fontSize: 100,
+                    }}
+                    className="text-custom-text-pink text-9xl"
+                    onClick={() => setShowOut(false)}
+                  >
+                    You're die!
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="">
+              {board
+                ? board.map((rowItems, row) => {
+                    return (
+                      <div
+                        className="flex flex-row items-center justify-center"
+                        key={row}
+                      >
+                        {rowItems.map((ice, col) => {
+                          const renderFunc = iceRenderers[ice];
+                          return renderFunc
+                            ? renderFunc(iceSize, row, col, players)
+                            : null;
+                        })}
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
           </div>
         </div>
       </div>
@@ -406,7 +546,7 @@ export default GamePage;
 
 // Get imgae path based on players' chosen colors and direction
 function getIcon(props, colors) {
-  const myColor = colors[props.player.colorId ?? 0]; //Obtain each player's color from the color list
+  const myColor = colors[props.player.colorId ?? 0];
   var direction = props.player.direction;
 
   if (props.player.direction === "LEFT") {

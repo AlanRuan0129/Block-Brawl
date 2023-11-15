@@ -40,7 +40,6 @@ initSocketServer(httpServer);
 const io = getSocketIO();
 
 io.on("connection", (socket) => {
-  console.log("A user connected", socket.id);
   CreateRoomOn(socket);
   JoinRoomOn(socket);
   PlayerReadyOn(socket);
@@ -57,9 +56,9 @@ io.on("connection", (socket) => {
 // Connect to MongoDB and start the server
 connectDB()
   .then(() => {
-    const port = process.env.PORT || 5000;
-    httpServer.listen(port, () => {
-      console.log(`httpServer is running on port ${port}`);
+    const PORT = process.env.PORT || 5000;
+    httpServer.listen(PORT, () => {
+      console.log(`httpServer is running on port ${PORT}`);
     });
   })
   .catch((err) => {

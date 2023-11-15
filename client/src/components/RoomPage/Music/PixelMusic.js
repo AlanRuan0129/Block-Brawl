@@ -26,7 +26,7 @@ export default function PixelMusic({ autoPlay = false }) {
   return (
     <button
       onClick={togglePlay}
-      className={` bg-pink-200 border-2 border-pink-500 hover:bg-pink-300 rounded-full px-3 py-3 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-opacity-50`}
+      className={` bg-pink-200 border-2 border-pink-500 hover:bg-pink-300 rounded-full px-[0.4rem] py-[0.4rem] transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-opacity-50`}
     >
       {/* {isPlaying ? <FcMusic /> : "Play"} */}
       <FcMusic />

@@ -83,14 +83,11 @@ export class RoomManager {
           room.closeGame();
 
           let numSurvivor = 0;
-          /**
-           * @type {Player} - breaker
-           */
+
           let breaker;
           room.players.forEach((player) => {
             player.isReady = false;
             if (player.isAlive && !player.isBreaker) {
-              // player.score++;
               numSurvivor++;
             }
             if (player.isBreaker) {
@@ -100,7 +97,7 @@ export class RoomManager {
           if (numSurvivor == 0) {
             breaker.score += room.players.size;
           }
-          // clear color status
+
           room.colorStatus = [
             null,
             null,
@@ -181,9 +178,7 @@ export class RoomManager {
     let room = rooms.get(roomId);
     if (room && room.board) {
       room.board.break(x, y);
-      // console.log("breakTile");
 
-      // Check whether there is a player killed on the broken tile
       room.players.forEach((player, playerId) => {
         if (!room.checkPlayerAlive(playerId)) {
           this.playerDead(roomId, player);
@@ -197,9 +192,7 @@ export class RoomManager {
     let room = rooms.get(roomId);
     if (room && room.board) {
       room.board.breakOnly(x, y);
-      // console.log("breakTile");
 
-      // Check whether there is a player killed on the broken tile
       room.players.forEach((player, playerId) => {
         if (!room.checkPlayerAlive(playerId)) {
           this.playerDead(roomId, player);

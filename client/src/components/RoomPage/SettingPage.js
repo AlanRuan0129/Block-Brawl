@@ -2,10 +2,11 @@ import { useNavigate } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
 import { PlayerSelect } from "./PlayerSelect.js";
 import { HostSelect } from "./HostSelect.js";
-import { AppContext } from "../GameContext.js";
-import socket from "../Socket";
-import { MainButton } from "./MainButton/MainButton.js";
-import { CheckIcon, rem } from "@mantine/core";
+import { AppContext } from "../../GameContext.js";
+import socket from "../../Socket.js";
+import { MainButton } from "../MainButton/MainButton.js";
+import { CheckIcon } from "@mantine/core";
+import PixelMusic from "./Music/PixelMusic.js";
 
 export default function SettingPage() {
   const navigate = useNavigate();
@@ -18,19 +19,14 @@ export default function SettingPage() {
     setColorStatus,
     roomId,
     handlers,
-    // eslint-disable-next-line no-unused-vars
-    config,
     setConfig,
   } = useContext(AppContext);
 
   const [checkedColor, setCheckedColor] = useState(null);
   const [isReady, setIsReady] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [isReadyFail, setIsReadyFail] = useState(false);
+
   const [isSuccess, setSuccess] = useState(false);
   const [isSuccess2, setSuccess2] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [isUpdateResponse, setUpdateResponse] = useState(false);
 
   const playerReady = () => {
     socket.emit(
@@ -40,9 +36,6 @@ export default function SettingPage() {
       (isReady) => {
         if (isReady) {
           setIsReady(true);
-          setIsReadyFail(false);
-        } else {
-          setIsReadyFail(true);
         }
       }
     );
@@ -72,13 +65,11 @@ export default function SettingPage() {
 
   const updateConfigLevel1 = () => {
     const Config1 = {
-      //  boardSize: 9,
       level: 1,
       roundTime: 60,
       breakTime: 0.0,
     };
     socket.emit("update-config", { roomId, config: Config1 }, (isSuccess) => {
-      setUpdateResponse(true);
       setSuccess(isSuccess);
       setSuccess2(false);
     });
@@ -86,13 +77,11 @@ export default function SettingPage() {
 
   const updateConfigLevel2 = () => {
     const Config2 = {
-      // boardSize: 9,
       level: 2,
       roundTime: 120,
       breakTime: 1.0,
     };
     socket.emit("update-config", { roomId, config: Config2 }, (isSuccess) => {
-      setUpdateResponse(true);
       setSuccess2(isSuccess);
       setSuccess(false);
     });
@@ -118,7 +107,7 @@ export default function SettingPage() {
         setColorStatus(game.colorStatus);
       }
       if (game.board) {
-        navigate("/Layout/game", { state: { game: game } });
+        navigate("/game", { state: { game: game } });
       }
     };
     socket.on("game-update", startGame);
@@ -126,12 +115,13 @@ export default function SettingPage() {
     return () => {
       socket.off("game-update", startGame);
     };
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div className="overflow-hidden">
-      <div className="flex flex-col h-screen overflow-y-auto bg-room bg-center bg-cover">
-        <div className="flex flex-row justify-center gap-2 text-2xl font-bold text-pink-300">
+      <div className="flex flex-col h-screen bg-room bg-center bg-cover">
+        <div className="flex flex-row relative justify-center gap-2 text-2xl font-bold text-pink-300">
           Room Code: {roomId}
           <button onClick={() => navigator.clipboard.writeText(roomId)}>
             <svg
@@ -151,13 +141,16 @@ export default function SettingPage() {
             </svg>
           </button>
         </div>
+        <div className="absolute top-0 right-0 pr-2 pt-2">
+          <PixelMusic />
+        </div>
 
         <div className="flex flex-col items-center justify-center gap-2 text-black">
-          <div className="text-2xl font-bold text-pink-300 mt-4">
+          <div className="text-2xl font-bold text-pink-300 mt-[0.5rem]">
             {isHost ? "Invite your friends!" : "Wait for host to Start!"}
           </div>
 
-          <div className="text-xl font-bold mt-3">
+          <div className="text-lg font-bold h-[1rem]">
             {isSuccess && (
               <p className="text-center text-green-500">
                 Successfully Updated Normal Game
@@ -172,7 +165,7 @@ export default function SettingPage() {
         </div>
 
         {isHost ? (
-          <div className="flex flex-col items-center mt-10">
+          <div className="flex flex-col items-center justify-center mt-[2rem]">
             <HostSelect
               colorStrings={colors}
               colorStatus={colorStatus}
@@ -183,7 +176,7 @@ export default function SettingPage() {
             />
           </div>
         ) : (
-          <div className="flex flex-col items-center mt-10">
+          <div className="flex flex-row items-center justify-center mt-[8rem]">
             <PlayerSelect
               colorStrings={colors}
               colorStatus={colorStatus}
@@ -194,65 +187,68 @@ export default function SettingPage() {
             />
           </div>
         )}
-
-        <div class="flex items-center justify-center space-x-10 mt-10">
-          <div class="relative flex flex-col items-center">
-            <p className="text-xl font-bold text-pink-300 mb-5">Normal Game</p>
-            <button
-              onClick={updateConfigLevel1}
-              className="relative overflow-hidden"
-              style={{ left: "50%", transform: "translateX(-50%)" }}
-            >
-              <img
-                src={process.env.PUBLIC_URL + "/assets/left.jpg"}
-                alt="Normal Game"
-                className="w-[18rem] h-[10rem] rounded-2xl"
-              />
-
-              {isSuccess && (
-                <CheckIcon
-                  style={{
-                    width: "2rem",
-                    height: "2rem",
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
+        {isHost && (
+          <div class="flex items-center justify-center space-x-10 mt-[1rem]">
+            <div class="relative flex flex-col items-center">
+              <p className="text-xl font-bold text-pink-300 mb-5">
+                Normal Game
+              </p>
+              <button
+                onClick={updateConfigLevel1}
+                className="relative overflow-hidden"
+                style={{ left: "50%", transform: "translateX(-50%)" }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/left.jpg"}
+                  alt="Normal Game"
+                  className="w-[15rem] h-[8rem] rounded-2xl"
                 />
-              )}
-            </button>
-          </div>
 
-          <div class="relative flex flex-col items-center">
-            <p className="text-xl font-bold text-pink-300 mb-5">Hard Game</p>
-            <button
-              onClick={updateConfigLevel2}
-              className="relative overflow-hidden"
-              style={{ left: "50%", transform: "translateX(-50%)" }}
-            >
-              <img
-                src={process.env.PUBLIC_URL + "/assets/right.jpg"}
-                alt="Hard Game"
-                className="w-[18rem] h-[10rem] rounded-2xl"
-              />
-              {isSuccess2 && (
-                <CheckIcon
-                  style={{
-                    width: "2rem",
-                    height: "2rem",
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
+                {isSuccess && (
+                  <CheckIcon
+                    style={{
+                      width: "2rem",
+                      height: "2rem",
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                )}
+              </button>
+            </div>
+
+            <div class="relative flex flex-col items-center">
+              <p className="text-xl font-bold text-pink-300 mb-5">Hard Game</p>
+              <button
+                onClick={updateConfigLevel2}
+                className="relative overflow-hidden"
+                style={{ left: "50%", transform: "translateX(-50%)" }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/right.jpg"}
+                  alt="Hard Game"
+                  className="w-[15rem] h-[8rem] rounded-2xl"
                 />
-              )}
-            </button>
+                {isSuccess2 && (
+                  <CheckIcon
+                    style={{
+                      width: "2rem",
+                      height: "2rem",
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                )}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="flex flex-col items-center mt-16  space-y-6">
+        <div className="flex flex-col lg:h-[12rem] h-[9rem] mt-[2rem] space-y-6 justify-end items-center">
           <div className="flex flex-row items-center justify-center">
             <MainButton
               handleClick={isReady ? playerUnReady : playerReady}
@@ -260,9 +256,11 @@ export default function SettingPage() {
             />
           </div>
 
-          <div className="flex flex-row items-center justify-center">
-            <MainButton handleClick={startGame} text="Start Game" />
-          </div>
+          {isHost && (
+            <div className="flex flex-row items-center justify-center">
+              <MainButton handleClick={startGame} text="Start Game" />
+            </div>
+          )}
         </div>
       </div>
     </div>

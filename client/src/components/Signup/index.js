@@ -39,7 +39,6 @@ const Signup = () => {
     <div className={styles.signup_container}>
       <div className={styles.signup_form_container}>
         <div className={styles.left}>
-          
           <Link to="/login">
             <button type="button">
               <svg

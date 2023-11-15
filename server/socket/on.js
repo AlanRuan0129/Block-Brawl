@@ -25,23 +25,6 @@ export function JoinRoomOn(socket) {
   });
 }
 
-// // Outside RoomManager class, in your socket event handlers
-// export function JoinRoomOn(socket) {
-//   socket.on("join-room", ({ roomId, name }, callback) => {
-//     const result = RoomManager.joinRoom(socket, roomId, name);
-//     if (result.error) {
-//       // If there is an error, send it back through the callback
-//       callback({ error: result.error });
-//     } else if (result.room) {
-//       // If a room object is returned, send its status back
-//       callback(result.room.toDto());
-//     } else {
-//       // Handle any other cases (this shouldn't happen with the above logic)
-//       callback({ error: "An unexpected error occurred." });
-//     }
-//   });
-// }
-
 export function StartGameOn(socket) {
   socket.on("start-game", ({ roomId }, callback) => {
     let isSuccess = RoomManager.startGame(roomId);
