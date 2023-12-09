@@ -153,6 +153,21 @@
 
 <br/>
 
+## Tech Stack
+
+### Frontend
+- React
+- CSS
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Express
+
+### Real-Time Communication
+- Socket.IO
+  
+
 ## Installation Guide
 
 <ul>
