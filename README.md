@@ -157,7 +157,6 @@
 
 ### Frontend
 - React
-- CSS
 - Tailwind CSS
 
 ### Backend
